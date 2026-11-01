@@ -1,18 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
+import { site, hasPhone, hasEmail } from '../config/site';
+
 const crumbs = [{ name: 'Start', href: '/' }, { name: 'Kontakt', href: '/kontakt' }];
 ---
 <BaseLayout
-  title="Kontakt - BORS Łódź"
-  description="Skontaktuj się z BORS - instalacje i remonty w Łodzi. Telefon, e-mail, adres, formularz i bezpłatna wycena."
+  title="Kontakt - instalacje i remonty Łódź | BORS"
+  description="Skontaktuj się z BORS - instalacje wod-kan, c.o. i remonty w Łodzi. Telefon, e-mail, adres na Polesiu, formularz i bezpłatna wycena."
   jsonLd={[breadcrumbJsonLd(crumbs)]}
 >
   <Breadcrumbs items={crumbs} />
-  <section class="mx-auto max-w-6xl px-4 py-14">
-    <h1 class="text-3xl sm:text-4xl">Kontakt</h1>
-    <!-- Dane kontaktowe, mapa (link, bez iframe) i formularz Web3Forms powstają w etapie 6. -->
-    <p class="mt-4 max-w-2xl text-lg text-muted">Dane kontaktowe i formularz pojawią się tutaj wkrótce.</p>
+  <section class="mx-auto max-w-6xl px-4 py-10 md:py-14">
+    <div class="max-w-2xl">
+      <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Kontakt</p>
+      <h1 class="text-3xl sm:text-4xl">Napisz lub zadzwoń</h1>
+      <p class="mt-3 text-lg text-muted">Oględziny i wycena są bezpłatne. Odpowiadamy na zapytania najszybciej, jak to możliwe.</p>
+    </div>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+      <!-- dane kontaktowe -->
+      <div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="phone" size={22} /></span>
+            <div>
+              <p class="text-sm font-semibold text-muted">Telefon</p>
+              {hasPhone ? <a href={`tel:${site.phoneHref}`} class="text-lg font-bold hover:text-copper">{site.phone}</a> : <p class="text-lg font-bold">{site.phone}</p>}
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="mail" size={22} /></span>
+            <div>
+              <p class="text-sm font-semibold text-muted">E-mail</p>
+              {hasEmail ? <a href={`mailto:${site.email}`} class="text-lg font-bold hover:text-copper">{site.email}</a> : <p class="text-lg font-bold">{site.email}</p>}
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="pin" size={22} /></span>
+            <div>
+              <p class="text-sm font-semibold text-muted">Adres</p>
+              <p class="text-lg font-bold">{site.address.street}</p>
+              <p class="text-muted">{site.address.postalCode} {site.address.city} ({site.address.district})</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="clock" size={22} /></span>
+            <div>
+              <p class="text-sm font-semibold text-muted">Godziny pracy</p>
+              <p class="text-lg font-bold">{site.hours}</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="mt-6 rounded-xl border border-line bg-stone p-4 text-sm text-muted">
+          <p>NIP: {site.nip} · REGON: {site.regon}</p>
+          <p class="mt-1">{site.legalName}</p>
+        </div>
+
+        <!-- mapa: link do Google Maps zamiast osadzonego iframe (bez cookies firm trzecich) -->
+        <a href={site.mapsLink} target="_blank" rel="noopener" class="group mt-6 flex items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold transition-colors hover:border-copper">
+          <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-petrol text-stone"><Icon name="pin" size={22} /></span>
+          <span>
+            Zobacz lokalizację na mapie Google
+            <span class="block text-sm font-normal text-muted">Otwiera się w nowej karcie</span>
+          </span>
+          <Icon name="arrow" size={20} class="ml-auto text-copper transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+
+      <!-- formularz -->
+      <div id="formularz" class="scroll-mt-24">
+        <ContactForm />
+      </div>
+    </div>
   </section>
 </BaseLayout>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
+import { site, hasEmail } from '../config/site';
 const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', href: '/polityka-prywatnosci' }];
 ---
 <BaseLayout
@@ -11,9 +12,91 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', h
   noindex
 >
   <Breadcrumbs items={crumbs} />
-  <section class="mx-auto max-w-3xl px-4 py-14">
+  <section class="mx-auto max-w-3xl px-4 py-10 md:py-14">
     <h1 class="text-3xl sm:text-4xl">Polityka prywatności</h1>
-    <!-- Pełna treść RODO (szablon do weryfikacji prawnej) powstaje w etapie 6. -->
-    <p class="mt-4 text-lg text-muted">Treść polityki prywatności pojawi się tutaj wkrótce.</p>
+
+    <div class="mt-5 rounded-xl border-2 border-dashed border-copper/40 bg-copper/5 p-4 text-sm text-ink">
+      <strong>Uwaga:</strong> poniższy dokument to szablon przygotowany na podstawie typowych wymogów RODO.
+      Przed publikacją <strong>należy go zweryfikować</strong> (najlepiej z prawnikiem) i uzupełnić dane kontaktowe.
+      <span class="font-semibold">[DO WERYFIKACJI]</span>
+    </div>
+
+    <div class="prose-bors mt-8 space-y-8">
+      <div>
+        <h2 class="text-xl">1. Administrator danych</h2>
+        <p class="mt-2 text-muted">
+          Administratorem Twoich danych osobowych jest {site.legalName},
+          {site.address.street}, {site.address.postalCode} {site.address.city}, NIP: {site.nip}, REGON: {site.regon}
+          (dalej „BORS”). Kontakt w sprawie danych: {hasEmail ? site.email : '[EMAIL]'}, tel. {site.phone}.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">2. Jakie dane przetwarzamy</h2>
+        <p class="mt-2 text-muted">
+          Przetwarzamy dane, które sam podajesz w formularzu kontaktowym: imię i nazwisko, adres e-mail,
+          opcjonalnie numer telefonu oraz treść wiadomości (w tym podsumowanie z kalkulatora, jeśli je dołączysz).
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">3. Cel i podstawa prawna</h2>
+        <p class="mt-2 text-muted">
+          Dane przetwarzamy w celu obsługi Twojego zapytania, przygotowania odpowiedzi i ewentualnej wyceny.
+          Podstawą prawną jest art. 6 ust. 1 lit. a RODO (Twoja zgoda) oraz art. 6 ust. 1 lit. b i f RODO
+          (podjęcie działań na Twoje żądanie przed zawarciem umowy oraz nasz prawnie uzasadniony interes - kontakt
+          z osobą zainteresowaną usługą).
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">4. Odbiorcy danych</h2>
+        <p class="mt-2 text-muted">
+          Formularz kontaktowy obsługiwany jest przez usługę <strong>Web3Forms</strong> (operator przekazuje treść
+          formularza na nasz adres e-mail). Web3Forms działa jako podmiot przetwarzający dane w naszym imieniu.
+          Dane mogą być także przetwarzane przez dostawcę poczty e-mail oraz dostawcę hostingu strony.
+          Nie sprzedajemy ani nie udostępniamy Twoich danych w celach marketingowych innym podmiotom. <span class="font-semibold">[DO WERYFIKACJI]</span>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">5. Okres przechowywania</h2>
+        <p class="mt-2 text-muted">
+          Dane z zapytania przechowujemy przez czas niezbędny do obsługi sprawy, a następnie przez okres
+          przedawnienia ewentualnych roszczeń. Jeśli nie dojdzie do współpracy, dane usuwamy, gdy przestają
+          być potrzebne. <span class="font-semibold">[DO WERYFIKACJI - podaj konkretny okres]</span>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">6. Twoje prawa</h2>
+        <p class="mt-2 text-muted">Przysługuje Ci prawo do:</p>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-muted">
+          <li>dostępu do swoich danych oraz otrzymania ich kopii,</li>
+          <li>sprostowania (poprawiania) danych,</li>
+          <li>usunięcia danych,</li>
+          <li>ograniczenia przetwarzania,</li>
+          <li>przenoszenia danych,</li>
+          <li>wniesienia sprzeciwu wobec przetwarzania,</li>
+          <li>cofnięcia zgody w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania sprzed cofnięcia),</li>
+          <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (PUODO).</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl">7. Dobrowolność podania danych</h2>
+        <p class="mt-2 text-muted">
+          Podanie danych jest dobrowolne, ale niezbędne do udzielenia odpowiedzi na zapytanie wysłane przez formularz.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">8. Pliki cookies i analityka</h2>
+        <p class="mt-2 text-muted">
+          Strona nie korzysta z plików cookies śledzących ani z narzędzi analitycznych firm trzecich.
+          W przypadku dodania takich narzędzi w przyszłości zaktualizujemy politykę i wprowadzimy mechanizm zgody. <span class="font-semibold">[DO WERYFIKACJI]</span>
+        </p>
+      </div>
+    </div>
   </section>
 </BaseLayout>

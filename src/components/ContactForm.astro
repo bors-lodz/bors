@@ -1,0 +1,106 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+const key = site.web3formsKey;
+---
+<form id="contact-form" class="rounded-2xl border border-line bg-white p-6 sm:p-8">
+  <input type="hidden" name="access_key" value={key} />
+  <input type="hidden" name="subject" value="Nowe zapytanie ze strony BORS" />
+  <input type="hidden" name="from_name" value="Formularz BORS" />
+  {/* honeypot antyspamowy - ukryty przed użytkownikiem, boty go wypełniają */}
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="cf-name" class="block text-sm font-semibold">Imię i nazwisko <span class="text-copper">*</span></label>
+      <input id="cf-name" name="name" type="text" required autocomplete="name" class="cf-field" />
+    </div>
+    <div>
+      <label for="cf-phone" class="block text-sm font-semibold">Telefon</label>
+      <input id="cf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" class="cf-field" />
+    </div>
+  </div>
+  <div class="mt-4">
+    <label for="cf-email" class="block text-sm font-semibold">E-mail <span class="text-copper">*</span></label>
+    <input id="cf-email" name="email" type="email" required autocomplete="email" class="cf-field" />
+  </div>
+  <div class="mt-4">
+    <label for="cf-message" class="block text-sm font-semibold">Wiadomość <span class="text-copper">*</span></label>
+    <textarea id="cf-message" name="message" required rows="6" autocomplete="off" class="cf-field" placeholder="Opisz, co chcesz zrobić - metraż, zakres prac, lokalizacja."></textarea>
+  </div>
+
+  <label class="mt-4 flex items-start gap-2 text-sm text-muted">
+    <input type="checkbox" required class="mt-1 h-4 w-4 accent-[color:var(--color-copper)]" />
+    <span>Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie. Szczegóły w <a href="/polityka-prywatnosci" class="font-semibold text-copper hover:underline">polityce prywatności</a>.</span>
+  </label>
+
+  <button type="submit" id="cf-submit" class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 font-bold text-white transition-colors hover:bg-copper-light disabled:opacity-60 sm:w-auto">
+    <Icon name="mail" size={20} /> Wyślij zapytanie
+  </button>
+
+  <p id="cf-status" class="mt-4 hidden rounded-xl p-3 text-sm font-semibold" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .cf-field { width: 100%; margin-top: .35rem; border-radius: .6rem; border: 1px solid var(--color-line); padding: .6rem .75rem; font-size: 1rem; background: #fff; }
+  .cf-field:focus-visible { outline: 3px solid var(--color-copper); outline-offset: 1px; }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('cf-status');
+  const submit = document.getElementById('cf-submit') as HTMLButtonElement | null;
+
+  if (form && status && submit) {
+    // prefill z kalkulatora
+    try {
+      const params = new URLSearchParams(location.search);
+      const saved = sessionStorage.getItem('bors_wycena');
+      if (params.get('from') === 'kalkulator' && saved) {
+        const msg = document.getElementById('cf-message') as HTMLTextAreaElement;
+        msg.value = saved + '\n\n';
+        sessionStorage.removeItem('bors_wycena');
+      }
+    } catch {}
+
+    const setStatus = (ok: boolean, text: string) => {
+      status.textContent = text;
+      status.classList.remove('hidden');
+      status.classList.toggle('bg-green-50', ok);
+      status.classList.toggle('text-green-800', ok);
+      status.classList.toggle('bg-red-50', !ok);
+      status.classList.toggle('text-red-700', !ok);
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form) as any);
+      if ((form.elements.namedItem('access_key') as HTMLInputElement)?.value.startsWith('[')) {
+        setStatus(false, 'Formularz nie jest jeszcze skonfigurowany (brak klucza Web3Forms). Skontaktuj się telefonicznie lub e-mailowo.');
+        return;
+      }
+      submit.disabled = true;
+      const prev = submit.textContent;
+      submit.textContent = 'Wysyłanie...';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.success) {
+          setStatus(true, 'Dziękujemy! Wiadomość została wysłana - odezwiemy się najszybciej, jak to możliwe.');
+          form.reset();
+        } else {
+          setStatus(false, 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń do nas.');
+        }
+      } catch {
+        setStatus(false, 'Wystąpił problem z połączeniem. Spróbuj ponownie lub zadzwoń do nas.');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = prev;
+      }
+    });
+  }
+</script>
