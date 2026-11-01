@@ -1,0 +1,352 @@
+---
+import Icon from './Icon.astro';
+
+const works = [
+  { id: 'lazienka', label: 'Remont łazienki kompleksowo', icon: 'bath' },
+  { id: 'wod-kan', label: 'Instalacja wod-kan', icon: 'pipe' },
+  { id: 'co', label: 'Instalacja c.o. / grzejniki', icon: 'radiator' },
+  { id: 'glazura', label: 'Glazura i terakota', icon: 'tiles' },
+  { id: 'kuchnia', label: 'Remont kuchni', icon: 'trowel' },
+  { id: 'inne', label: 'Inne / nie wiem', icon: 'calc' },
+] as const;
+
+const fixtures = [
+  { id: 'wc', label: 'WC' },
+  { id: 'umywalka', label: 'Umywalka' },
+  { id: 'prysznic', label: 'Prysznic' },
+  { id: 'wanna', label: 'Wanna' },
+  { id: 'pralka', label: 'Pralka' },
+  { id: 'zmywarka', label: 'Zmywarka' },
+  { id: 'bidet', label: 'Bidet' },
+  { id: 'zlew', label: 'Zlew' },
+] as const;
+
+const addons = [
+  { id: 'stelazWc', label: 'Stelaż WC podwieszany' },
+  { id: 'odplywLiniowy', label: 'Odpływ liniowy' },
+  { id: 'kabinaBrodzik', label: 'Kabina / brodzik' },
+  { id: 'wannaZabudowa', label: 'Wanna z zabudową' },
+  { id: 'umywalkaSzafka', label: 'Umywalka z szafką i baterią' },
+  { id: 'grzejnikLazienkowy', label: 'Grzejnik łazienkowy' },
+  { id: 'sufitGk', label: 'Sufit podwieszany GK' },
+  { id: 'malowanie', label: 'Malowanie' },
+  { id: 'ogrzewaniePodlogowe', label: 'Ogrzewanie podłogowe wodne' },
+] as const;
+
+const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
+---
+<div id="calc" class="mx-auto max-w-3xl">
+  <!-- pasek postępu -->
+  <ol class="mb-8 grid grid-cols-4 gap-2" aria-hidden="true">
+    {stepTitles.map((t, i) => (
+      <li data-prog={i + 1} class="flex flex-col gap-1.5">
+        <span class="prog-bar h-1.5 rounded-full bg-stone-dark transition-colors"></span>
+        <span class="prog-label text-xs font-semibold text-muted">{i + 1}. {t}</span>
+      </li>
+    ))}
+  </ol>
+
+  <form id="calc-form" novalidate>
+    <!-- KROK 1 -->
+    <fieldset data-step="1" class="step">
+      <legend class="text-xl font-bold">Co chcesz zrobić?</legend>
+      <p class="mt-1 text-sm text-muted">Możesz zaznaczyć kilka pozycji.</p>
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+        {works.map((w) => (
+          <label class="opt flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold transition-all hover:border-copper/50 has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+            <input type="checkbox" name="work" value={w.id} class="h-5 w-5 accent-[color:var(--color-copper)]" />
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-stone text-petrol"><Icon name={w.icon} size={20} /></span>
+            {w.label}
+          </label>
+        ))}
+      </div>
+      <p id="err-1" class="mt-3 hidden text-sm font-semibold text-copper">Zaznacz przynajmniej jedną pozycję.</p>
+    </fieldset>
+
+    <!-- KROK 2 -->
+    <fieldset data-step="2" class="step hidden">
+      <legend class="text-xl font-bold">Parametry</legend>
+
+      <!-- metraż -->
+      <div data-group="metraz" class="mt-5 grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="floorArea" class="block text-sm font-semibold">Powierzchnia podłogi (m²)</label>
+          <input id="floorArea" name="floorArea" type="number" inputmode="decimal" min="0" step="0.5" class="field" placeholder="np. 6" />
+        </div>
+        <div>
+          <label for="wallTileArea" class="block text-sm font-semibold">Powierzchnia ścian do płytek (m²)</label>
+          <input id="wallTileArea" name="wallTileArea" type="number" inputmode="decimal" min="0" step="0.5" class="field" placeholder="np. 18" />
+          <button type="button" id="wall-help-toggle" class="mt-1.5 text-sm font-semibold text-copper hover:underline">Nie wiesz? Policzymy »</button>
+          <div id="wall-help" class="mt-2 hidden rounded-xl border border-line bg-stone p-3">
+            <p class="text-xs text-muted">Podaj obwód pomieszczenia i wysokość płytek - policzymy pole ścian.</p>
+            <div class="mt-2 grid grid-cols-2 gap-2">
+              <input id="perimeter" type="number" inputmode="decimal" min="0" step="0.1" class="field" placeholder="obwód (m)" />
+              <input id="tileHeight" type="number" inputmode="decimal" min="0" step="0.1" class="field" placeholder="wysokość (m)" />
+            </div>
+            <button type="button" id="wall-calc" class="mt-2 rounded-lg bg-petrol px-3 py-1.5 text-sm font-bold text-white">Przelicz na m²</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- punkty wod-kan -->
+      <div data-group="fixtures" class="mt-6">
+        <p class="text-sm font-semibold">Punkty wodno-kanalizacyjne</p>
+        <p class="text-xs text-muted">Zaznacz przybory - każdy to jeden punkt.</p>
+        <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {fixtures.map((f) => (
+            <label class="opt flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-white px-2 py-2.5 text-sm font-semibold transition-all hover:border-copper/50 has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+              <input type="checkbox" name="fixture" value={f.id} class="h-4 w-4 accent-[color:var(--color-copper)]" />
+              {f.label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- c.o. -->
+      <div data-group="co" class="mt-6 grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="coRadiators" class="block text-sm font-semibold">Grzejniki do wymiany / montażu (szt.)</label>
+          <input id="coRadiators" name="coRadiators" type="number" inputmode="numeric" min="0" step="1" class="field" placeholder="np. 3" />
+        </div>
+        <div>
+          <label for="coNewPoints" class="block text-sm font-semibold">Nowe punkty c.o. (szt.)</label>
+          <input id="coNewPoints" name="coNewPoints" type="number" inputmode="numeric" min="0" step="1" class="field" placeholder="np. 2" />
+        </div>
+      </div>
+
+      <!-- demontaż / wywóz -->
+      <div data-group="demolish" class="mt-6 flex flex-wrap gap-3">
+        <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+          <input type="checkbox" id="demolishTiles" class="h-4 w-4 accent-[color:var(--color-copper)]" /> Demontaż starych płytek
+        </label>
+        <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+          <input type="checkbox" id="rubbleRemoval" class="h-4 w-4 accent-[color:var(--color-copper)]" /> Wywóz gruzu
+        </label>
+      </div>
+
+      <!-- format płytek -->
+      <div data-group="tiles" class="mt-6">
+        <p class="text-sm font-semibold">Format płytek</p>
+        <div class="mt-2 flex flex-wrap gap-2">
+          {[['standard', 'Standard (do 60×60)'], ['duzy', 'Duży format (>60×60)'], ['mozaika', 'Mozaika']].map(([v, l], i) => (
+            <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+              <input type="radio" name="tileFormat" value={v} checked={i === 0} class="accent-[color:var(--color-copper)]" /> {l}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- dodatki -->
+      <div data-group="addons" class="mt-6">
+        <p class="text-sm font-semibold">Dodatki</p>
+        <div class="mt-3 grid gap-2 sm:grid-cols-2">
+          {addons.map((a) => (
+            <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-3 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+              <input type="checkbox" name="addon" value={a.id} class="h-4 w-4 accent-[color:var(--color-copper)]" /> {a.label}
+            </label>
+          ))}
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- KROK 3 -->
+    <fieldset data-step="3" class="step hidden">
+      <legend class="text-xl font-bold">Standard i materiały</legend>
+      <div class="mt-5">
+        <p class="text-sm font-semibold">Co ma obejmować wycena?</p>
+        <div class="mt-2 grid gap-2 sm:grid-cols-2">
+          <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-3 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+            <input type="radio" name="scope" value="robocizna" checked class="accent-[color:var(--color-copper)]" /> Tylko robocizna
+          </label>
+          <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-3 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+            <input type="radio" name="scope" value="robocizna_materialy" class="accent-[color:var(--color-copper)]" /> Robocizna + materiały
+          </label>
+        </div>
+      </div>
+      <div id="mat-std" class="mt-6">
+        <p class="text-sm font-semibold">Standard materiałów (płytki + chemia)</p>
+        <div class="mt-2 flex flex-wrap gap-2">
+          {[['podstawowy', 'Podstawowy'], ['sredni', 'Średni'], ['wysoki', 'Wysoki']].map(([v, l], i) => (
+            <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+              <input type="radio" name="materialStandard" value={v} checked={i === 1} class="accent-[color:var(--color-copper)]" /> {l}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div class="mt-6">
+        <p class="text-sm font-semibold">Stawka VAT</p>
+        <div class="mt-2 flex flex-wrap gap-2">
+          <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+            <input type="radio" name="vat" value="8" checked class="accent-[color:var(--color-copper)]" /> 8% (remont lokalu mieszkalnego)
+          </label>
+          <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
+            <input type="radio" name="vat" value="23" class="accent-[color:var(--color-copper)]" /> 23%
+          </label>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- KROK 4 -->
+    <fieldset data-step="4" class="step hidden">
+      <legend class="text-xl font-bold">Wycena orientacyjna</legend>
+      <div id="result" class="mt-5" aria-live="polite"></div>
+    </fieldset>
+
+    <!-- nawigacja -->
+    <div class="mt-8 flex items-center justify-between gap-3 border-t border-line pt-5">
+      <button type="button" id="btn-back" class="inline-flex items-center gap-2 rounded-xl border-2 border-line px-5 py-3 font-bold text-ink transition-colors hover:border-copper disabled:cursor-not-allowed disabled:opacity-40" disabled>
+        <Icon name="arrow" size={18} class="rotate-180" /> Wstecz
+      </button>
+      <button type="button" id="btn-next" class="inline-flex items-center gap-2 rounded-xl bg-copper px-6 py-3 font-bold text-white transition-colors hover:bg-copper-light">
+        Dalej <Icon name="arrow" size={18} />
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .field { width: 100%; margin-top: .35rem; border-radius: .6rem; border: 1px solid var(--color-line); padding: .6rem .75rem; font-size: 1rem; }
+  .field:focus-visible { outline: 3px solid var(--color-copper); outline-offset: 1px; }
+</style>
+
+<script>
+  import { estimate, formatSummary, type EstimateInput, type WorkCategory } from '../lib/estimate';
+  import type { TileFormat, MaterialStandard } from '../config/pricing';
+
+  const root = document.getElementById('calc');
+  const form = document.getElementById('calc-form') as HTMLFormElement | null;
+  if (root && form) {
+    const steps = Array.from(root.querySelectorAll<HTMLElement>('.step'));
+    const progBars = Array.from(root.querySelectorAll<HTMLElement>('.prog-bar'));
+    const btnBack = document.getElementById('btn-back') as HTMLButtonElement;
+    const btnNext = document.getElementById('btn-next') as HTMLButtonElement;
+    const err1 = document.getElementById('err-1')!;
+    const result = document.getElementById('result')!;
+    const TOTAL = steps.length;
+    let current = 1;
+
+    const money = (n: number) => `${n.toLocaleString('pl-PL')} zł`;
+    const checkedWorks = () => Array.from(form.querySelectorAll<HTMLInputElement>('input[name="work"]:checked')).map((i) => i.value as WorkCategory);
+
+    const readInput = (): EstimateInput => {
+      const num = (id: string) => parseFloat((document.getElementById(id) as HTMLInputElement)?.value) || 0;
+      const fixtures = form.querySelectorAll<HTMLInputElement>('input[name="fixture"]:checked').length;
+      const addonChecked = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="addon"]:checked')).map((i) => i.value);
+      const has = (k: string) => addonChecked.includes(k);
+      return {
+        works: checkedWorks(),
+        floorArea: num('floorArea'),
+        wallTileArea: num('wallTileArea'),
+        plumbingPoints: fixtures,
+        coNewPoints: num('coNewPoints'),
+        coRadiators: num('coRadiators'),
+        demolishTiles: (document.getElementById('demolishTiles') as HTMLInputElement).checked,
+        rubbleRemoval: (document.getElementById('rubbleRemoval') as HTMLInputElement).checked,
+        tileFormat: (form.querySelector('input[name="tileFormat"]:checked') as HTMLInputElement).value as TileFormat,
+        addons: {
+          stelazWc: has('stelazWc'), odplywLiniowy: has('odplywLiniowy'), kabinaBrodzik: has('kabinaBrodzik'),
+          wannaZabudowa: has('wannaZabudowa'), umywalkaSzafka: has('umywalkaSzafka'), grzejnikLazienkowy: has('grzejnikLazienkowy'),
+          sufitGk: has('sufitGk'), malowanie: has('malowanie'), ogrzewaniePodlogowe: has('ogrzewaniePodlogowe'),
+        },
+        scope: (form.querySelector('input[name="scope"]:checked') as HTMLInputElement).value as EstimateInput['scope'],
+        materialStandard: (form.querySelector('input[name="materialStandard"]:checked') as HTMLInputElement).value as MaterialStandard,
+        vat: parseInt((form.querySelector('input[name="vat"]:checked') as HTMLInputElement).value, 10),
+      };
+    };
+
+    // pokazuj w kroku 2 tylko grupy pasujące do wyboru
+    const applyVisibility = () => {
+      const w = checkedWorks();
+      const show = (sel: string, cond: boolean) => {
+        const el = root.querySelector<HTMLElement>(`[data-group="${sel}"]`);
+        if (el) el.classList.toggle('hidden', !cond);
+      };
+      const tiling = w.includes('lazienka') || w.includes('glazura') || w.includes('kuchnia');
+      show('metraz', tiling || w.includes('inne'));
+      show('fixtures', w.includes('lazienka') || w.includes('wod-kan') || w.includes('kuchnia'));
+      show('co', w.includes('co'));
+      show('demolish', tiling);
+      show('tiles', tiling);
+      show('addons', w.includes('lazienka') || w.includes('co') || w.includes('kuchnia') || w.includes('glazura'));
+    };
+
+    const renderResult = () => {
+      const input = readInput();
+      const r = estimate(input);
+      const rows = [...r.items, ...(r.materials ? [r.materials] : [])]
+        .map((i) => `<tr class="border-b border-line/60"><td class="py-2 pr-2">${i.label}</td><td class="py-2 text-right text-muted whitespace-nowrap">${i.qty} ${i.unit}</td><td class="py-2 pl-2 text-right font-semibold whitespace-nowrap">${money(i.total)}</td></tr>`)
+        .join('');
+      if (r.net <= 0) {
+        result.innerHTML = `<p class="rounded-xl border border-dashed border-line bg-stone p-5 text-muted">Uzupełnij parametry w poprzednich krokach, aby zobaczyć wycenę.</p>`;
+        return;
+      }
+      result.innerHTML = `
+        <div class="rounded-2xl border-2 border-copper/30 bg-copper/5 p-5 text-center">
+          <p class="text-sm font-semibold uppercase tracking-wide text-copper">Szacowany koszt (brutto, VAT ${r.vatRate}%)</p>
+          <p class="mt-1 font-display text-3xl font-extrabold text-ink sm:text-4xl">${money(r.low)} – ${money(r.high)}</p>
+          <p class="mt-1 text-sm text-muted">Szacowany czas realizacji: ok. <strong>${r.days}</strong> dni roboczych</p>
+        </div>
+        <table class="mt-5 w-full text-sm"><tbody>${rows}</tbody>
+          <tfoot>
+            <tr><td class="pt-3" colspan="2">Robocizna netto</td><td class="pt-3 text-right font-semibold">${money(r.laborNet)}</td></tr>
+            ${r.materialsNet ? `<tr><td colspan="2">Materiały netto</td><td class="text-right font-semibold">${money(r.materialsNet)}</td></tr>` : ''}
+            <tr><td colspan="2">VAT ${r.vatRate}%</td><td class="text-right font-semibold">${money(r.vatAmount)}</td></tr>
+            <tr class="text-base"><td colspan="2" class="pt-1 font-bold">Razem brutto</td><td class="pt-1 text-right font-bold text-copper">${money(r.gross)}</td></tr>
+          </tfoot>
+        </table>
+        <p class="mt-4 rounded-xl bg-stone p-4 text-sm text-muted"><strong>Wycena orientacyjna.</strong> Ostateczna cena po bezpłatnych oględzinach. Podane widełki uwzględniają margines ±15%.</p>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button type="button" id="btn-send" class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-5 py-3 font-bold text-white hover:bg-copper-light">Wyślij to zapytanie</button>
+          <button type="button" id="btn-copy" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-line px-5 py-3 font-bold text-ink hover:border-copper">Skopiuj podsumowanie</button>
+        </div>`;
+
+      const summary = formatSummary(input, r);
+      document.getElementById('btn-send')?.addEventListener('click', () => {
+        try { sessionStorage.setItem('bors_wycena', summary); } catch {}
+        window.location.href = '/kontakt?from=kalkulator#formularz';
+      });
+      document.getElementById('btn-copy')?.addEventListener('click', async (e) => {
+        const b = e.currentTarget as HTMLButtonElement;
+        try { await navigator.clipboard.writeText(summary); b.textContent = 'Skopiowano ✓'; setTimeout(() => (b.textContent = 'Skopiuj podsumowanie'), 2000); }
+        catch { b.textContent = 'Nie udało się skopiować'; }
+      });
+    };
+
+    const show = (n: number, scroll = true) => {
+      current = Math.min(Math.max(n, 1), TOTAL);
+      steps.forEach((s) => s.classList.toggle('hidden', s.dataset.step !== String(current)));
+      progBars.forEach((b, i) => b.classList.toggle('bg-copper', i < current));
+      progBars.forEach((b, i) => b.classList.toggle('bg-stone-dark', i >= current));
+      btnBack.disabled = current === 1;
+      btnNext.textContent = current === TOTAL ? 'Zacznij od nowa' : 'Dalej';
+      if (current === 2) applyVisibility();
+      if (current === TOTAL) renderResult();
+      if (scroll) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    btnNext.addEventListener('click', () => {
+      if (current === 1 && checkedWorks().length === 0) { err1.classList.remove('hidden'); return; }
+      err1.classList.add('hidden');
+      if (current === TOTAL) { form.reset(); show(1); return; }
+      show(current + 1);
+    });
+    btnBack.addEventListener('click', () => show(current - 1));
+
+    // preselekcja z ?prace=
+    const pre = new URLSearchParams(location.search).get('prace');
+    if (pre) {
+      const cb = form.querySelector<HTMLInputElement>(`input[name="work"][value="${CSS.escape(pre)}"]`);
+      if (cb) cb.checked = true;
+    }
+
+    // helper: pole ścian z obwodu × wysokości
+    document.getElementById('wall-help-toggle')?.addEventListener('click', () => document.getElementById('wall-help')?.classList.toggle('hidden'));
+    document.getElementById('wall-calc')?.addEventListener('click', () => {
+      const p = parseFloat((document.getElementById('perimeter') as HTMLInputElement).value) || 0;
+      const h = parseFloat((document.getElementById('tileHeight') as HTMLInputElement).value) || 0;
+      if (p > 0 && h > 0) (document.getElementById('wallTileArea') as HTMLInputElement).value = String(Math.round(p * h * 10) / 10);
+    });
+
+    show(1, false);
+  }
+</script>
