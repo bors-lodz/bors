@@ -84,9 +84,9 @@ Strona wdraża się automatycznie przy każdym `push` na gałąź `main`
 
 **Krok 1. Włącz Pages:** w repo `Settings → Pages → Build and deployment → Source: GitHub Actions`.
 
-**Krok 2. Ustaw domenę w kodzie** (3 miejsca, wpisz docelową domenę zamiast `bors.lodz.pl`):
+**Krok 2. Ustaw domenę w kodzie** (3 miejsca, wpisz docelową domenę zamiast `bors-lodz.pl`):
 - `astro.config.mjs` → pole `site`
-- `public/CNAME` → sama domena (np. `bors.lodz.pl`)
+- `public/CNAME` → sama domena (np. `bors-lodz.pl`)
 - `public/robots.txt` → adres w linii `Sitemap:`
 
 **Krok 3. Ustaw domenę w GitHub:** `Settings → Pages → Custom domain` → wpisz domenę i zapisz.
@@ -97,7 +97,7 @@ Strona wdraża się automatycznie przy każdym `push` na gałąź `main`
   ```
   CNAME   www   <twoj-login>.github.io
   ```
-- Dla domeny głównej (apex, np. `bors.lodz.pl`) - rekordy **A** (IPv4):
+- Dla domeny głównej (apex, np. `bors-lodz.pl`) - rekordy **A** (IPv4):
   ```
   A   @   185.199.108.153
   A   @   185.199.109.153
@@ -137,7 +137,7 @@ Przed publikacją uzupełnij:
 | `[EMAIL]` | `src/config/site.ts` (`email`) | adres e-mail firmy |
 | `[GODZINY]` | `src/config/site.ts` (`hours`) | godziny pracy, np. `pon.-pt. 7:00-17:00` |
 | `[WEB3FORMS_KEY]` | `.env` / sekret GitHub | klucz z web3forms.com |
-| domena `bors.lodz.pl` | `astro.config.mjs`, `public/CNAME`, `public/robots.txt` | docelowa domena |
+| domena `bors-lodz.pl` | `astro.config.mjs`, `public/CNAME`, `public/robots.txt` | docelowa domena |
 | współrzędne `geo` | `src/config/site.ts` | dokładna szer./dł. geogr. z Google Maps |
 | stawki `// DO WERYFIKACJI Z KLIENTEM` | `src/config/pricing.ts` | potwierdzić/zmienić ceny i stawkę VAT |
 | `[DO UZUPEŁNIENIA]` | `src/data/services.ts`, strona główna | opinie, liczba realizacji, lata doświadczenia, certyfikaty (dopiero gdy będą prawdziwe) |

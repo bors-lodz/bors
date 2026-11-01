@@ -5,7 +5,7 @@
 
 export const site = {
   // --- Domena (PLACEHOLDER do zmiany po zakupie; patrz też astro.config.mjs i public/CNAME) ---
-  url: 'https://bors.lodz.pl',
+  url: 'https://bors-lodz.pl',
 
   // --- Nazwa / marka ---
   brand: 'BORS',
