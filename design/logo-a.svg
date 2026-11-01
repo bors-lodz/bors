@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-labelledby="a-t">
+  <title id="a-t">BORS - instalacje i remonty (logo poziome, koncepcja A)</title>
+  <!-- sygnet -->
+  <g transform="translate(8,16)">
+    <rect x="0" y="0" width="64" height="64" rx="14" fill="#10505C"/>
+    <path d="M20 50 V31 Q20 24 27 24 H45" fill="none" stroke="#D98A4F"
+          stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="13.5" y="46.5" width="13" height="7" rx="2" fill="#F5F3EF"/>
+    <rect x="42" y="17.5" width="7" height="13" rx="2" fill="#F5F3EF"/>
+    <circle cx="22.4" cy="28.4" r="2.1" fill="#10505C"/>
+  </g>
+  <!-- wordmark -->
+  <text x="88" y="54" font-family="'Archivo','Arial Black','Helvetica Neue',sans-serif"
+        font-weight="800" font-size="40" letter-spacing="1" fill="#1C2A2E">BORS</text>
+  <text x="90" y="74" font-family="'Archivo','Arial Narrow',sans-serif"
+        font-weight="600" font-size="12.5" letter-spacing="3.5" fill="#C26B35">INSTALACJE · REMONTY · ŁÓDŹ</text>
+</svg>

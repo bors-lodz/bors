@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="c-mark-t">
+  <title id="c-mark-t">BORS - sygnet (kropla + dom)</title>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#10505C"/>
+  <!-- dom -->
+  <path d="M32 13 L50 29 V51 H14 V29 Z" fill="none" stroke="#F5F3EF"
+        stroke-width="4" stroke-linejoin="round"/>
+  <!-- kropla wody w środku -->
+  <path d="M32 31 C 37 38 40 42 40 45.5 A8 8 0 1 1 24 45.5 C 24 42 27 38 32 31 Z"
+        fill="#D98A4F"/>
+</svg>

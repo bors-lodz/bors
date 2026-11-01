@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-labelledby="b-t">
+  <title id="b-t">BORS - instalacje i remonty (logo poziome, koncepcja B)</title>
+  <g transform="translate(8,16)">
+    <rect x="0" y="0" width="64" height="64" rx="14" fill="#10505C"/>
+    <rect x="13" y="13" width="16" height="16" rx="3" fill="#F5F3EF"/>
+    <rect x="35" y="13" width="16" height="16" rx="3" fill="#F5F3EF"/>
+    <rect x="13" y="35" width="16" height="16" rx="3" fill="#F5F3EF"/>
+    <rect x="35" y="35" width="16" height="16" rx="3" fill="#C26B35"/>
+  </g>
+  <text x="88" y="54" font-family="'Archivo','Arial Black','Helvetica Neue',sans-serif"
+        font-weight="800" font-size="40" letter-spacing="1" fill="#1C2A2E">BORS</text>
+  <text x="90" y="74" font-family="'Archivo','Arial Narrow',sans-serif"
+        font-weight="600" font-size="12.5" letter-spacing="3.5" fill="#C26B35">GLAZURA · REMONTY · INSTALACJE</text>
+</svg>

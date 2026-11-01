@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-labelledby="c-t">
+  <title id="c-t">BORS - instalacje i remonty (logo poziome, koncepcja C)</title>
+  <g transform="translate(8,16)">
+    <rect x="0" y="0" width="64" height="64" rx="14" fill="#10505C"/>
+    <path d="M32 13 L50 29 V51 H14 V29 Z" fill="none" stroke="#F5F3EF"
+          stroke-width="4" stroke-linejoin="round"/>
+    <path d="M32 31 C 37 38 40 42 40 45.5 A8 8 0 1 1 24 45.5 C 24 42 27 38 32 31 Z"
+          fill="#D98A4F"/>
+  </g>
+  <text x="88" y="54" font-family="'Archivo','Arial Black','Helvetica Neue',sans-serif"
+        font-weight="800" font-size="40" letter-spacing="1" fill="#1C2A2E">BORS</text>
+  <text x="90" y="74" font-family="'Archivo','Arial Narrow',sans-serif"
+        font-weight="600" font-size="12.5" letter-spacing="3.5" fill="#C26B35">WOD-KAN · C.O. · REMONTY · ŁÓDŹ</text>
+</svg>
