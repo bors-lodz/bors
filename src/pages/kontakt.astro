@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbJsonLd } from '../lib/seo';
+const crumbs = [{ name: 'Start', href: '/' }, { name: 'Kontakt', href: '/kontakt' }];
+---
+<BaseLayout
+  title="Kontakt - BORS Łódź"
+  description="Skontaktuj się z BORS - instalacje i remonty w Łodzi. Telefon, e-mail, adres, formularz i bezpłatna wycena."
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+  <section class="mx-auto max-w-6xl px-4 py-14">
+    <h1 class="text-3xl sm:text-4xl">Kontakt</h1>
+    <!-- Dane kontaktowe, mapa (link, bez iframe) i formularz Web3Forms powstają w etapie 6. -->
+    <p class="mt-4 max-w-2xl text-lg text-muted">Dane kontaktowe i formularz pojawią się tutaj wkrótce.</p>
+  </section>
+</BaseLayout>

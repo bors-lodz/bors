@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bors.lodz.pl/sitemap-index.xml

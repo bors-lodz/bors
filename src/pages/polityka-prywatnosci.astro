@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbJsonLd } from '../lib/seo';
+const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', href: '/polityka-prywatnosci' }];
+---
+<BaseLayout
+  title="Polityka prywatności | BORS Łódź"
+  description="Informacja o przetwarzaniu danych osobowych (RODO) w serwisie BORS."
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+  noindex
+>
+  <Breadcrumbs items={crumbs} />
+  <section class="mx-auto max-w-3xl px-4 py-14">
+    <h1 class="text-3xl sm:text-4xl">Polityka prywatności</h1>
+    <!-- Pełna treść RODO (szablon do weryfikacji prawnej) powstaje w etapie 6. -->
+    <p class="mt-4 text-lg text-muted">Treść polityki prywatności pojawi się tutaj wkrótce.</p>
+  </section>
+</BaseLayout>

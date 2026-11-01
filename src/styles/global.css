@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Tokeny projektu BORS - paleta (petrol + miedź) i typografia.       */
+/*  Dostępne jako klasy Tailwind: bg-petrol, text-copper, font-display */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-petrol: #10505c;
+  --color-petrol-dark: #0a3a43;
+  --color-petrol-light: #1b6676;
+  --color-copper: #c26b35;
+  --color-copper-light: #d98a4f;
+  --color-ink: #1c2a2e;
+  --color-muted: #55605c;
+  --color-stone: #f5f3ef;
+  --color-stone-dark: #e9e5dd;
+  --color-line: #e2ddd5;
+
+  --font-sans: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-display: 'Archivo', 'Source Sans 3', system-ui, sans-serif;
+
+  --radius-xl2: 1.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-copper);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  a { color: inherit; }
+}
+
+/* Płynne przejścia tylko gdy użytkownik ich nie wyłączył. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Element pomijany wizualnie, dostępny dla czytników / fokusu. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}

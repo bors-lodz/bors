@@ -1,0 +1,68 @@
+---
+import { site, nav, hasPhone, hasEmail } from '../config/site';
+import { services } from '../data/services';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+---
+<footer class="mt-20 bg-petrol-dark text-stone/85">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- firma -->
+    <div class="lg:col-span-1">
+      <Logo variant="full" onDark class="h-11 w-auto" />
+      <p class="mt-4 text-sm leading-relaxed text-stone/70">{site.legalName}</p>
+      <p class="mt-3 text-sm text-stone/70">NIP: {site.nip}<br />REGON: {site.regon}</p>
+    </div>
+
+    <!-- usługi -->
+    <nav aria-label="Usługi w stopce">
+      <h2 class="font-display text-sm font-bold uppercase tracking-wider text-copper-light">Usługi</h2>
+      <ul class="mt-4 space-y-2 text-sm">
+        {services.map((s) => (
+          <li><a href={`/uslugi/${s.slug}`} class="transition-colors hover:text-white">{s.navTitle}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- nawigacja -->
+    <nav aria-label="Strona w stopce">
+      <h2 class="font-display text-sm font-bold uppercase tracking-wider text-copper-light">Strona</h2>
+      <ul class="mt-4 space-y-2 text-sm">
+        {nav.map((item) => (
+          <li><a href={item.href} class="transition-colors hover:text-white">{item.label}</a></li>
+        ))}
+        <li><a href="/polityka-prywatnosci" class="transition-colors hover:text-white">Polityka prywatności</a></li>
+      </ul>
+    </nav>
+
+    <!-- kontakt -->
+    <div>
+      <h2 class="font-display text-sm font-bold uppercase tracking-wider text-copper-light">Kontakt</h2>
+      <ul class="mt-4 space-y-3 text-sm">
+        <li class="flex items-start gap-2">
+          <Icon name="pin" size={18} class="mt-0.5 shrink-0 text-copper-light" />
+          <span>{site.address.street}<br />{site.address.postalCode} {site.address.city}</span>
+        </li>
+        <li class="flex items-center gap-2">
+          <Icon name="phone" size={18} class="shrink-0 text-copper-light" />
+          {hasPhone ? <a href={`tel:${site.phoneHref}`} class="hover:text-white">{site.phone}</a> : <span>{site.phone}</span>}
+        </li>
+        <li class="flex items-center gap-2">
+          <Icon name="mail" size={18} class="shrink-0 text-copper-light" />
+          {hasEmail ? <a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a> : <span>{site.email}</span>}
+        </li>
+        <li class="flex items-start gap-2">
+          <Icon name="clock" size={18} class="mt-0.5 shrink-0 text-copper-light" />
+          <span>{site.hours}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-stone/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.brand}. Wszelkie prawa zastrzeżone.</p>
+      <p>Realizacja: <a href={site.author.url} target="_blank" rel="noopener" class="font-semibold text-copper-light hover:text-white">{site.author.name}</a></p>
+    </div>
+  </div>
+</footer>

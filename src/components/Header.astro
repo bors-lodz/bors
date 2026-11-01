@@ -1,0 +1,75 @@
+---
+import { site, nav, hasPhone } from '../config/site';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+const phoneHref = hasPhone ? `tel:${site.phoneHref}` : '/kontakt';
+---
+<header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+    <a href="/" class="shrink-0" aria-label="BORS - strona główna">
+      <Logo variant="full" class="h-10 w-auto" />
+    </a>
+
+    <!-- nawigacja desktop -->
+    <nav class="hidden items-center gap-7 md:flex" aria-label="Główna">
+      {nav.map((item) => (
+        <a href={item.href} class="text-[15px] font-semibold text-ink/80 transition-colors hover:text-copper">{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="hidden items-center gap-3 md:flex">
+      <a
+        href={phoneHref}
+        class="inline-flex items-center gap-2 rounded-lg bg-copper px-4 py-2 text-[15px] font-bold text-white shadow-sm transition-colors hover:bg-copper/90"
+      >
+        <Icon name="phone" size={18} />
+        <span>{hasPhone ? site.phone : 'Zadzwoń'}</span>
+      </a>
+    </div>
+
+    <!-- przycisk menu mobile -->
+    <button
+      id="menu-btn"
+      class="inline-flex items-center justify-center rounded-lg border border-line p-2 text-ink md:hidden"
+      aria-label="Otwórz menu"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+    >
+      <Icon name="menu" size={26} />
+    </button>
+  </div>
+
+  <!-- panel mobile -->
+  <div id="menu-mobile" class="hidden border-t border-line bg-white md:hidden">
+    <nav class="mx-auto flex max-w-6xl flex-col px-4 py-3" aria-label="Mobilna">
+      {nav.map((item) => (
+        <a href={item.href} class="border-b border-line/70 py-3 text-base font-semibold text-ink">{item.label}</a>
+      ))}
+      <a href={phoneHref} class="mt-4 inline-flex items-center justify-center gap-2 rounded-lg bg-copper px-4 py-3 text-base font-bold text-white">
+        <Icon name="phone" size={18} />
+        <span>{hasPhone ? site.phone : 'Zadzwoń do nas'}</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const panel = document.getElementById('menu-mobile');
+  if (btn && panel) {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.setAttribute('aria-label', open ? 'Otwórz menu' : 'Zamknij menu');
+      panel.classList.toggle('hidden', open);
+    });
+    // zamknij po kliknięciu w link
+    panel.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        btn.setAttribute('aria-expanded', 'false');
+        panel.classList.add('hidden');
+      }),
+    );
+  }
+</script>

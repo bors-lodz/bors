@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { breadcrumbJsonLd } from '../lib/seo';
+const crumbs = [{ name: 'Start', href: '/' }, { name: 'Realizacje', href: '/realizacje' }];
+---
+<BaseLayout
+  title="Realizacje - remonty i instalacje Łódź | BORS"
+  description="Galeria zrealizowanych remontów łazienek, instalacji i prac glazurniczych BORS w Łodzi."
+  jsonLd={[breadcrumbJsonLd(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+  <section class="mx-auto max-w-6xl px-4 py-14">
+    <h1 class="text-3xl sm:text-4xl">Realizacje</h1>
+    <!-- Galeria z lightboxem powstaje w etapie 5 (dane: src/data/realizacje.ts). -->
+    <p class="mt-4 max-w-2xl text-lg text-muted">Galeria naszych prac pojawi się tutaj wkrótce.</p>
+  </section>
+</BaseLayout>

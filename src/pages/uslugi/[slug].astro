@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import { services, getService } from '../../data/services';
+import { site, hasPhone } from '../../config/site';
+import { breadcrumbJsonLd, faqJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = getService(slug!)!;
+const phoneHref = hasPhone ? `tel:${site.phoneHref}` : '/kontakt';
+const calcHref = `/kalkulator?prace=${service.calcCategory}`;
+
+const crumbs = [
+  { name: 'Start', href: '/' },
+  { name: 'Usługi', href: '/#uslugi' },
+  { name: service.navTitle, href: `/uslugi/${service.slug}` },
+];
+
+// Treść bazowa; pełny zakres prac i FAQ uzupełniane na etapie 5.
+const jsonLd = [breadcrumbJsonLd(crumbs)];
+if (service.faq?.length) jsonLd.push(faqJsonLd(service.faq));
+---
+<BaseLayout
+  title={service.title ?? `${service.cardTitle} - Łódź | BORS`}
+  description={service.description ?? `${service.cardDesc} BORS - ${service.navTitle} w Łodzi i okolicach. Bezpłatna wycena.`}
+  jsonLd={jsonLd}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-6xl px-4 py-10 md:py-14">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-stone text-petrol">
+        <Icon name={service.icon} size={30} />
+      </span>
+      <h1 class="text-3xl sm:text-4xl">{service.cardTitle}</h1>
+    </div>
+    <p class="mt-5 max-w-2xl text-lg text-muted">{service.lead ?? service.cardDesc}</p>
+
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href={calcHref} class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 font-bold text-white hover:bg-copper-light">
+        <Icon name="calc" size={20} /> Oblicz koszt
+      </a>
+      <a href={phoneHref} class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-line px-6 py-3.5 font-bold text-ink hover:border-copper">
+        <Icon name="phone" size={20} /> {hasPhone ? site.phone : 'Zadzwoń'}
+      </a>
+    </div>
+
+    {service.scope?.length ? (
+      <div class="mt-12">
+        <h2 class="text-2xl">Zakres prac</h2>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          {service.scope.map((item) => (
+            <li class="flex items-start gap-3 rounded-xl border border-line bg-white p-4">
+              <Icon name="check" size={20} class="mt-0.5 shrink-0 text-copper" /> <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      /* DO UZUPEŁNIENIA (etap 5): szczegółowy zakres prac dla tej usługi */
+      <p class="mt-12 rounded-xl border border-dashed border-line bg-stone p-5 text-sm text-muted">
+        Szczegółowy opis zakresu prac i FAQ pojawi się wkrótce. W międzyczasie policz koszt w kalkulatorze lub zadzwoń.
+      </p>
+    )}
+
+    {service.faq?.length ? (
+      <div class="mt-12">
+        <h2 class="text-2xl">Najczęstsze pytania</h2>
+        <div class="mt-5 space-y-3">
+          {service.faq.map((f) => (
+            <details class="group rounded-xl border border-line bg-white p-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between font-bold">{f.q}<Icon name="arrow" size={18} class="rotate-90 text-copper transition-transform group-open:-rotate-90" /></summary>
+              <p class="mt-3 text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    ) : null}
+  </section>
+</BaseLayout>

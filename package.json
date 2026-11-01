@@ -1,0 +1,29 @@
+{
+  "name": "bors-strona",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "og": "node scripts/make-og.mjs",
+    "prebuild": "node scripts/make-og.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource/archivo": "5.3.0",
+    "@fontsource/source-sans-3": "5.3.1",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.4.4",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "5.0.5"
+  }
+}
