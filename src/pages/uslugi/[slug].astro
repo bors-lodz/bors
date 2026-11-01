@@ -14,6 +14,7 @@ const { slug } = Astro.params;
 const service = getService(slug!)!;
 const phoneHref = hasPhone ? `tel:${site.phoneHref}` : '/kontakt';
 const calcHref = `/kalkulator?prace=${service.calcCategory}`;
+const others = services.filter((s) => s.slug !== service.slug);
 
 const crumbs = [
   { name: 'Start', href: '/' },
@@ -81,5 +82,28 @@ if (service.faq?.length) jsonLd.push(faqJsonLd(service.faq));
         </div>
       </div>
     ) : null}
+
+    <!-- CTA -->
+    <div class="mt-14 flex flex-col items-center gap-5 rounded-3xl bg-petrol px-6 py-10 text-center text-stone">
+      <h2 class="max-w-xl text-2xl text-stone sm:text-3xl">Chcesz poznać orientacyjny koszt?</h2>
+      <p class="max-w-lg text-stone/80">Policz online w 2 minuty albo zadzwoń - oględziny i wycena są bezpłatne.</p>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a href={calcHref} class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 font-bold text-white hover:bg-copper-light"><Icon name="calc" size={20} /> Oblicz koszt</a>
+        <a href={phoneHref} class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-6 py-3.5 font-bold text-white hover:bg-white/10"><Icon name="phone" size={20} /> {hasPhone ? site.phone : 'Zadzwoń do nas'}</a>
+      </div>
+    </div>
+
+    <!-- pozostałe usługi -->
+    <div class="mt-14">
+      <h2 class="text-2xl">Pozostałe usługi</h2>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {others.map((o) => (
+          <a href={`/uslugi/${o.slug}`} class="group flex items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold transition-all hover:border-copper/40 hover:shadow">
+            <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-stone text-petrol group-hover:bg-copper group-hover:text-white"><Icon name={o.icon} size={22} /></span>
+            <span class="text-sm">{o.navTitle}</span>
+          </a>
+        ))}
+      </div>
+    </div>
   </section>
 </BaseLayout>

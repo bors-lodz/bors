@@ -1,18 +1,85 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
+import { realizacje } from '../data/realizacje';
+import { site, hasPhone } from '../config/site';
+
 const crumbs = [{ name: 'Start', href: '/' }, { name: 'Realizacje', href: '/realizacje' }];
+const phoneHref = hasPhone ? `tel:${site.phoneHref}` : '/kontakt';
 ---
 <BaseLayout
   title="Realizacje - remonty i instalacje Łódź | BORS"
-  description="Galeria zrealizowanych remontów łazienek, instalacji i prac glazurniczych BORS w Łodzi."
+  description="Galeria zrealizowanych remontów łazienek, instalacji wod-kan i c.o. oraz prac glazurniczych BORS w Łodzi i okolicach."
   jsonLd={[breadcrumbJsonLd(crumbs)]}
 >
   <Breadcrumbs items={crumbs} />
-  <section class="mx-auto max-w-6xl px-4 py-14">
-    <h1 class="text-3xl sm:text-4xl">Realizacje</h1>
-    <!-- Galeria z lightboxem powstaje w etapie 5 (dane: src/data/realizacje.ts). -->
-    <p class="mt-4 max-w-2xl text-lg text-muted">Galeria naszych prac pojawi się tutaj wkrótce.</p>
+  <section class="mx-auto max-w-6xl px-4 py-10 md:py-14">
+    <div class="max-w-2xl">
+      <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Portfolio</p>
+      <h1 class="text-3xl sm:text-4xl">Nasze realizacje</h1>
+      <p class="mt-3 text-lg text-muted">Zdjęcia wykonanych przez nas prac. Kliknij, aby powiększyć.</p>
+    </div>
+
+    {realizacje.length === 0 ? (
+      /* STAN PUSTY: DO UZUPEŁNIENIA zdjęciami (patrz src/data/realizacje.ts) */
+      <div class="mt-10 rounded-3xl border border-dashed border-line bg-stone p-10 text-center">
+        <Icon name="tiles" size={48} class="mx-auto text-petrol/40" />
+        <h2 class="mt-4 text-xl">Galeria w przygotowaniu</h2>
+        <p class="mx-auto mt-2 max-w-md text-muted">Kompletujemy zdjęcia zrealizowanych remontów i instalacji. Zajrzyj wkrótce - a jeśli chcesz zobaczyć przykłady już teraz, zadzwoń do nas.</p>
+        <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href={phoneHref} class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3 font-bold text-white hover:bg-copper-light"><Icon name="phone" size={18} /> {hasPhone ? site.phone : 'Zadzwoń'}</a>
+          <a href="/kalkulator" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-line px-6 py-3 font-bold text-ink hover:border-copper"><Icon name="calc" size={18} /> Oblicz koszt remontu</a>
+        </div>
+      </div>
+    ) : (
+      <ul id="gallery" class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {realizacje.map((r, i) => (
+          <li>
+            <button type="button" class="gallery-item group block w-full overflow-hidden rounded-xl border border-line bg-stone" data-index={i} aria-label={`Powiększ: ${r.alt}`}>
+              <img src={r.thumb ?? r.src} alt={r.alt} loading="lazy" width="400" height="300" class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+            </button>
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
+
+  {realizacje.length > 0 && (
+    <>
+      {/* LIGHTBOX */}
+      <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 p-4" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+        <button id="lb-close" class="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20" aria-label="Zamknij"><Icon name="close" size={28} /></button>
+        <button id="lb-prev" class="absolute left-3 rounded-full bg-white/10 p-2 text-white hover:bg-white/20 sm:left-6" aria-label="Poprzednie"><Icon name="arrow" size={28} class="rotate-180" /></button>
+        <figure class="max-h-[85vh] max-w-5xl text-center">
+          <img id="lb-img" src="" alt="" class="mx-auto max-h-[80vh] w-auto rounded-lg" />
+          <figcaption id="lb-cap" class="mt-3 text-sm text-white/80"></figcaption>
+        </figure>
+        <button id="lb-next" class="absolute right-3 rounded-full bg-white/10 p-2 text-white hover:bg-white/20 sm:right-6" aria-label="Następne"><Icon name="arrow" size={28} /></button>
+      </div>
+
+      <script define:vars={{ items: realizacje }}>
+        const lb = document.getElementById('lightbox');
+        const img = document.getElementById('lb-img');
+        const cap = document.getElementById('lb-cap');
+        let idx = 0;
+        const render = () => { const it = items[idx]; img.src = it.src; img.alt = it.alt; cap.textContent = `${it.category} - ${it.alt}`; };
+        const open = (i) => { idx = i; render(); lb.classList.remove('hidden'); lb.classList.add('flex'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus(); };
+        const close = () => { lb.classList.add('hidden'); lb.classList.remove('flex'); document.body.style.overflow = ''; };
+        const move = (d) => { idx = (idx + d + items.length) % items.length; render(); };
+        document.querySelectorAll('.gallery-item').forEach((b) => b.addEventListener('click', () => open(Number(b.dataset.index))));
+        document.getElementById('lb-close').addEventListener('click', close);
+        document.getElementById('lb-prev').addEventListener('click', () => move(-1));
+        document.getElementById('lb-next').addEventListener('click', () => move(1));
+        lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+        document.addEventListener('keydown', (e) => {
+          if (lb.classList.contains('hidden')) return;
+          if (e.key === 'Escape') close();
+          if (e.key === 'ArrowLeft') move(-1);
+          if (e.key === 'ArrowRight') move(1);
+        });
+      </script>
+    </>
+  )}
 </BaseLayout>
