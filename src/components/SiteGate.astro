@@ -1,0 +1,126 @@
+---
+/**
+ * SiteGate - MIEKKA bramka logowania na czas przed startem (pre-launch).
+ *
+ * UWAGA: to NIE jest realne zabezpieczenie. Tresc stron jest w statycznym HTML
+ * i w publicznym repo - ktos zdeterminowany ja zobaczy. Bramka odstrasza
+ * wylacznie przypadkowego goscia, ktory trafi na adres.
+ *
+ * Dane logowania (do zmiany): login `bors`, haslo `podglad2026`.
+ * W kodzie trzymany jest tylko skrot SHA-256 z "login:haslo".
+ * Aby ZMIENIC login/haslo: policz nowy skrot, np. w terminalu:
+ *     printf '%s' 'nowylogin:noweHaslo' | shasum -a 256
+ * i wklej wynik do stalej EXPECTED ponizej.
+ *
+ * Aby WYLACZYC bramke przed startem: usun <SiteGate /> z BaseLayout.astro.
+ */
+const EXPECTED = '79221a8da03432525a911bf69f45e424379048aa396580bd2880eb70f535144e';
+---
+<script is:inline define:vars={{ EXPECTED }}>
+  // Blokada natychmiast (przed renderem), jesli brak waznego tokenu.
+  (function () {
+    try {
+      if (localStorage.getItem('bors_gate') === EXPECTED) return;
+    } catch (e) {}
+    document.documentElement.setAttribute('data-locked', '');
+  })();
+</script>
+<style is:inline>
+  html[data-locked] body > *:not(#site-gate) { display: none !important; }
+  html[data-locked] { overflow: hidden; }
+  html:not([data-locked]) #site-gate { display: none; }
+  #site-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #10505c;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+  }
+  #site-gate .gate-card {
+    width: 100%;
+    max-width: 22rem;
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  }
+  #site-gate .gate-brand {
+    font-family: 'Archivo', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: 0.02em;
+    color: #10505c;
+    margin: 0;
+  }
+  #site-gate .gate-sub { margin: 0.25rem 0 1.5rem; color: #4b4740; font-size: 0.95rem; }
+  #site-gate label { display: block; font-size: 0.85rem; font-weight: 600; color: #3a3630; margin-bottom: 0.3rem; }
+  #site-gate input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 1rem;
+    border: 1.5px solid #d7d2c8;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+  }
+  #site-gate input:focus { outline: none; border-color: #c26b35; box-shadow: 0 0 0 3px rgba(194, 107, 53, 0.2); }
+  #site-gate button {
+    width: 100%;
+    padding: 0.7rem;
+    border: 0;
+    border-radius: 0.6rem;
+    background: #c26b35;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #site-gate button:hover { background: #a85a2a; }
+  #site-gate .gate-err { min-height: 1.25rem; margin: 0.75rem 0 0; color: #b42318; font-size: 0.85rem; }
+</style>
+<div id="site-gate" aria-hidden="false">
+  <form class="gate-card" id="gate-form" autocomplete="on">
+    <p class="gate-brand">BORS</p>
+    <p class="gate-sub">Strona w przygotowaniu. Zaloguj si&#281;, aby zobaczy&#263; podgl&#261;d.</p>
+    <label for="gate-login">Login</label>
+    <input id="gate-login" name="username" type="text" autocomplete="username" autofocus required />
+    <label for="gate-pass">Has&#322;o</label>
+    <input id="gate-pass" name="current-password" type="password" autocomplete="current-password" required />
+    <button type="submit">Wejd&#378;</button>
+    <p class="gate-err" id="gate-err" role="alert" aria-live="assertive"></p>
+  </form>
+</div>
+<script is:inline define:vars={{ EXPECTED }}>
+  (function () {
+    var form = document.getElementById('gate-form');
+    if (!form) return;
+    var err = document.getElementById('gate-err');
+    async function sha256(str) {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(function (b) {
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+    }
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var login = document.getElementById('gate-login').value.trim();
+      var pass = document.getElementById('gate-pass').value;
+      try {
+        var hash = await sha256(login + ':' + pass);
+        if (hash === EXPECTED) {
+          try { localStorage.setItem('bors_gate', EXPECTED); } catch (e2) {}
+          document.documentElement.removeAttribute('data-locked');
+        } else {
+          err.textContent = 'Nieprawidłowy login lub hasło.';
+          document.getElementById('gate-pass').value = '';
+        }
+      } catch (e3) {
+        err.textContent = 'Błąd logowania. Spróbuj ponownie.';
+      }
+    });
+  })();
+</script>
