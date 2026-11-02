@@ -41,7 +41,6 @@ export const pricing = {
   /** Dodatki liczone za m² (odnoszone do powierzchni podłogi). */
   addonsPerM2: {
     sufitGk: 150, // sufit podwieszany GK // DO WERYFIKACJI Z KLIENTEM
-    malowanie: 30, // malowanie (pow. wg metrażu podłogi - DO WERYFIKACJI) // DO WERYFIKACJI Z KLIENTEM
     ogrzewaniePodlogowe: 180, // ogrzewanie podłogowe wodne // DO WERYFIKACJI Z KLIENTEM
   },
 

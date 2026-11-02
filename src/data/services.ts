@@ -31,9 +31,9 @@ export const services: Service[] = [
     navTitle: 'Remonty łazienek',
     cardTitle: 'Kompleksowe remonty łazienek',
     cardDesc:
-      'Od demontażu po gotową łazienkę „pod klucz”: instalacje, hydroizolacja, glazura, biały montaż.',
+      'Od demontażu po gotową łazienkę: instalacje, hydroizolacja, glazura, biały montaż.',
     featuredOnHome: true,
-    title: 'Remont łazienki Łódź - kompleksowo „pod klucz” | BORS',
+    title: 'Remont łazienki Łódź - kompleksowo | BORS',
     description:
       'Kompleksowe remonty łazienek w Łodzi: instalacje wod-kan, hydroizolacja, glazura i terakota, biały montaż. Bezpłatne oględziny i wycena. Policz koszt w kalkulatorze.',
     lead: 'Remontujemy łazienki kompleksowo - od demontażu starej zabudowy, przez instalacje i hydroizolację, po układanie płytek i montaż armatury. Pracujemy jedną ekipą od początku do końca, dzięki czemu nie musisz koordynować kilku fachowców.',
@@ -55,7 +55,7 @@ export const services: Service[] = [
       },
       {
         q: 'Czy zajmujecie się wszystkim, czy tylko wybranymi pracami?',
-        a: 'Możemy wykonać pełen remont „pod klucz” albo tylko wybrany zakres (np. same instalacje lub samo układanie płytek). To Ty decydujesz, co bierzemy na siebie.',
+        a: 'Możemy wykonać pełen, kompleksowy remont albo tylko wybrany zakres (np. same instalacje lub samo układanie płytek). To Ty decydujesz, co bierzemy na siebie.',
       },
       {
         q: 'Czy kupujecie materiały?',

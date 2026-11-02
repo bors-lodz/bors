@@ -4,7 +4,7 @@
  */
 import { pricing, type TileFormat, type MaterialStandard } from '../config/pricing';
 
-export type WorkCategory = 'lazienka' | 'wod-kan' | 'co' | 'glazura' | 'kuchnia' | 'inne';
+export type WorkCategory = 'lazienka' | 'wod-kan' | 'co' | 'glazura' | 'inne';
 
 export interface EstimateInput {
   works: WorkCategory[];
@@ -24,7 +24,6 @@ export interface EstimateInput {
     umywalkaSzafka: boolean;
     grzejnikLazienkowy: boolean;
     sufitGk: boolean;
-    malowanie: boolean;
     ogrzewaniePodlogowe: boolean;
   };
   scope: 'robocizna' | 'robocizna_materialy';
@@ -63,7 +62,6 @@ const addonLabels: Record<keyof EstimateInput['addons'], string> = {
   umywalkaSzafka: 'Umywalka z szafką i baterią',
   grzejnikLazienkowy: 'Grzejnik łazienkowy',
   sufitGk: 'Sufit podwieszany GK',
-  malowanie: 'Malowanie',
   ogrzewaniePodlogowe: 'Ogrzewanie podłogowe wodne',
 };
 

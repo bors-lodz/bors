@@ -4,13 +4,13 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Icon from '../components/Icon.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
-import { site, hasPhone, hasEmail } from '../config/site';
+import { site, hasPhone } from '../config/site';
 
 const crumbs = [{ name: 'Start', href: '/' }, { name: 'Kontakt', href: '/kontakt' }];
 ---
 <BaseLayout
   title="Kontakt - instalacje i remonty Łódź | BORS"
-  description="Skontaktuj się z BORS - instalacje wod-kan, c.o. i remonty w Łodzi. Telefon, e-mail, adres na Polesiu, formularz i bezpłatna wycena."
+  description="Skontaktuj się z BORS - instalacje wod-kan, c.o. i remonty w Łodzi. Telefon, formularz kontaktowy i bezpłatna wycena."
   jsonLd={[breadcrumbJsonLd(crumbs)]}
 >
   <Breadcrumbs items={crumbs} />
@@ -33,21 +33,6 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Kontakt', href: '/kontakt
             </div>
           </li>
           <li class="flex items-start gap-3">
-            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="mail" size={22} /></span>
-            <div>
-              <p class="text-sm font-semibold text-muted">E-mail</p>
-              {hasEmail ? <a href={`mailto:${site.email}`} class="text-lg font-bold hover:text-copper">{site.email}</a> : <p class="text-lg font-bold">{site.email}</p>}
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="pin" size={22} /></span>
-            <div>
-              <p class="text-sm font-semibold text-muted">Adres</p>
-              <p class="text-lg font-bold">{site.address.street}</p>
-              <p class="text-muted">{site.address.postalCode} {site.address.city} ({site.address.district})</p>
-            </div>
-          </li>
-          <li class="flex items-start gap-3">
             <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-stone text-petrol"><Icon name="clock" size={22} /></span>
             <div>
               <p class="text-sm font-semibold text-muted">Godziny pracy</p>
@@ -60,16 +45,6 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Kontakt', href: '/kontakt
           <p>NIP: {site.nip} · REGON: {site.regon}</p>
           <p class="mt-1">{site.legalName}</p>
         </div>
-
-        <!-- mapa: link do Google Maps zamiast osadzonego iframe (bez cookies firm trzecich) -->
-        <a href={site.mapsLink} target="_blank" rel="noopener" class="group mt-6 flex items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold transition-colors hover:border-copper">
-          <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-petrol text-stone"><Icon name="pin" size={22} /></span>
-          <span>
-            Zobacz lokalizację na mapie Google
-            <span class="block text-sm font-normal text-muted">Otwiera się w nowej karcie</span>
-          </span>
-          <Icon name="arrow" size={20} class="ml-auto text-copper transition-transform group-hover:translate-x-1" />
-        </a>
       </div>
 
       <!-- formularz -->

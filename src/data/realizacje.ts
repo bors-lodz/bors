@@ -13,7 +13,7 @@
 export type Realizacja = {
   src: string; // ścieżka względem /public, np. '/realizacje/lazienka-1.jpg'
   alt: string; // opis dla dostępności i SEO
-  category: 'Łazienki' | 'Instalacje' | 'Glazura' | 'Wykończenia' | 'Kuchnie';
+  category: 'Łazienki' | 'Instalacje' | 'Glazura' | 'Wykończenia';
   thumb?: string; // opcjonalna miniatura; domyślnie = src
 };
 

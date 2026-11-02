@@ -28,10 +28,10 @@ const steps = [
           <Icon name="pin" size={16} /> Łódź i okolice
         </p>
         <h1 class="text-4xl leading-[1.08] sm:text-5xl">
-          Instalacje wod-kan, c.o. <br class="hidden sm:block" />i remonty „pod klucz”
+          Instalacje wod-kan, c.o. <br class="hidden sm:block" />glazura i remonty łazienek
         </h1>
         <p class="mt-5 max-w-xl text-lg text-stone/85">
-          Kompleksowo remontujemy łazienki i kuchnie, wykonujemy instalacje hydrauliczne i grzewcze,
+          Remontujemy łazienki, wykonujemy instalacje wodno-kanalizacyjne i grzewcze,
           układamy glazurę i terakotę. Solidnie, terminowo, z bezpłatną wyceną.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -45,7 +45,7 @@ const steps = [
         <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone/80">
           <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Bezpłatne oględziny</li>
           <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Przejrzysta wycena</li>
-          <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Instalacje i wykończenia w jednej ekipie</li>
+          <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Solidnie i terminowo</li>
         </ul>
       </div>
 
@@ -141,8 +141,8 @@ const steps = [
           <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Gdzie działamy</p>
           <h2 class="text-3xl sm:text-4xl">Łódź i okolice</h2>
           <p class="mt-4 text-lg text-muted">
-            Siedziba na Polesiu, przy {site.address.street}. Realizujemy zlecenia na terenie całej Łodzi
-            oraz w miejscowościach sąsiednich.
+            Realizujemy zlecenia na terenie całej Łodzi oraz w miejscowościach sąsiednich.
+            Dojeżdżamy na bezpłatne oględziny.
           </p>
           <ul class="mt-6 flex flex-wrap gap-2">
             {site.areaServed.map((city) => (
@@ -152,9 +152,9 @@ const steps = [
         </div>
         <div class="rounded-2xl border border-line bg-white p-8 text-center">
           <Icon name="pin" size={40} class="mx-auto text-copper" />
-          <p class="mt-4 font-bold">{site.address.street}</p>
-          <p class="text-muted">{site.address.postalCode} {site.address.city} ({site.address.district})</p>
-          <a href="/kontakt" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-copper hover:underline">Dane kontaktowe i mapa <Icon name="arrow" size={16} /></a>
+          <p class="mt-4 font-bold">Łódź i okolice</p>
+          <p class="text-muted">Dojazd na terenie miasta i miejscowości sąsiednich</p>
+          <a href="/kontakt" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-copper hover:underline">Dane kontaktowe <Icon name="arrow" size={16} /></a>
         </div>
       </div>
     </div>

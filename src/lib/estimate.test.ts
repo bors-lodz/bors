@@ -20,7 +20,6 @@ const base: EstimateInput = {
     umywalkaSzafka: false,
     grzejnikLazienkowy: false,
     sufitGk: false,
-    malowanie: false,
     ogrzewaniePodlogowe: false,
   },
   scope: 'robocizna',

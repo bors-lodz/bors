@@ -6,7 +6,6 @@ const works = [
   { id: 'wod-kan', label: 'Instalacja wod-kan', icon: 'pipe' },
   { id: 'co', label: 'Instalacja c.o. / grzejniki', icon: 'radiator' },
   { id: 'glazura', label: 'Glazura i terakota', icon: 'tiles' },
-  { id: 'kuchnia', label: 'Remont kuchni', icon: 'trowel' },
   { id: 'inne', label: 'Inne / nie wiem', icon: 'calc' },
 ] as const;
 
@@ -29,7 +28,6 @@ const addons = [
   { id: 'umywalkaSzafka', label: 'Umywalka z szafką i baterią' },
   { id: 'grzejnikLazienkowy', label: 'Grzejnik łazienkowy' },
   { id: 'sufitGk', label: 'Sufit podwieszany GK' },
-  { id: 'malowanie', label: 'Malowanie' },
   { id: 'ogrzewaniePodlogowe', label: 'Ogrzewanie podłogowe wodne' },
 ] as const;
 
@@ -246,7 +244,7 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
         addons: {
           stelazWc: has('stelazWc'), odplywLiniowy: has('odplywLiniowy'), kabinaBrodzik: has('kabinaBrodzik'),
           wannaZabudowa: has('wannaZabudowa'), umywalkaSzafka: has('umywalkaSzafka'), grzejnikLazienkowy: has('grzejnikLazienkowy'),
-          sufitGk: has('sufitGk'), malowanie: has('malowanie'), ogrzewaniePodlogowe: has('ogrzewaniePodlogowe'),
+          sufitGk: has('sufitGk'), ogrzewaniePodlogowe: has('ogrzewaniePodlogowe'),
         },
         scope: (form.querySelector('input[name="scope"]:checked') as HTMLInputElement).value as EstimateInput['scope'],
         materialStandard: (form.querySelector('input[name="materialStandard"]:checked') as HTMLInputElement).value as MaterialStandard,
@@ -261,13 +259,13 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
         const el = root.querySelector<HTMLElement>(`[data-group="${sel}"]`);
         if (el) el.classList.toggle('hidden', !cond);
       };
-      const tiling = w.includes('lazienka') || w.includes('glazura') || w.includes('kuchnia');
+      const tiling = w.includes('lazienka') || w.includes('glazura');
       show('metraz', tiling || w.includes('inne'));
-      show('fixtures', w.includes('lazienka') || w.includes('wod-kan') || w.includes('kuchnia'));
+      show('fixtures', w.includes('lazienka') || w.includes('wod-kan'));
       show('co', w.includes('co'));
       show('demolish', tiling);
       show('tiles', tiling);
-      show('addons', w.includes('lazienka') || w.includes('co') || w.includes('kuchnia') || w.includes('glazura'));
+      show('addons', w.includes('lazienka') || w.includes('co') || w.includes('glazura'));
     };
 
     const renderResult = () => {

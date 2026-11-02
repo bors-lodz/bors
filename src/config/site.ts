@@ -29,11 +29,11 @@ export const site = {
     geo: { lat: 51.7503, lng: 19.4155 }, // DO WERYFIKACJI
   },
 
-  // --- Kontakt (NIEZNANE - placeholdery) ---
-  phone: '[TELEFON]', // np. '+48 600 000 000'
-  phoneHref: '[TELEFON]', // wersja do tel: (bez spacji), np. '+48600000000'
-  email: '[EMAIL]',
-  hours: '[GODZINY]', // np. 'pon.-pt. 7:00-17:00'
+  // --- Kontakt ---
+  phone: '+48 603 378 228',
+  phoneHref: '+48603378228', // wersja do tel: (bez spacji)
+  email: '[EMAIL]', // nieujawniany na stronie - kontakt telefoniczny lub przez formularz
+  hours: 'pon.-pt. 9:00-17:00',
 
   // --- Obszar działania ---
   areaServed: ['Łódź', 'Pabianice', 'Zgierz', 'Aleksandrów Łódzki', 'Konstantynów Łódzki'],

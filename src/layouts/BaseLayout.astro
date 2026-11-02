@@ -43,18 +43,12 @@ const localBusiness: Record<string, unknown> = {
   image: ogImage,
   taxID: site.nip,
   vatID: `PL${site.nip}`,
+  // Adres szczegółowy i współrzędne celowo pominięte (lokalizacja nieujawniana).
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.address.street,
-    postalCode: site.address.postalCode,
     addressLocality: site.address.city,
     addressRegion: site.address.region,
     addressCountry: site.address.country,
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: site.address.geo.lat,
-    longitude: site.address.geo.lng,
   },
   areaServed: site.areaServed.map((name) => ({ '@type': 'City', name })),
   ...(hasPhone ? { telephone: site.phoneHref } : {}),

@@ -1,11 +1,11 @@
 ---
-import { site, nav, hasPhone, hasEmail } from '../config/site';
+import { site, nav, hasPhone } from '../config/site';
 import { services } from '../data/services';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 ---
-<footer class="mt-20 bg-petrol-dark text-stone/85">
+<footer class="bg-petrol-dark text-stone/85">
   <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
     <!-- firma -->
     <div class="lg:col-span-1">
@@ -39,21 +39,17 @@ const year = new Date().getFullYear();
     <div>
       <h2 class="font-display text-sm font-bold uppercase tracking-wider text-copper-light">Kontakt</h2>
       <ul class="mt-4 space-y-3 text-sm">
-        <li class="flex items-start gap-2">
-          <Icon name="pin" size={18} class="mt-0.5 shrink-0 text-copper-light" />
-          <span>{site.address.street}<br />{site.address.postalCode} {site.address.city}</span>
-        </li>
         <li class="flex items-center gap-2">
           <Icon name="phone" size={18} class="shrink-0 text-copper-light" />
           {hasPhone ? <a href={`tel:${site.phoneHref}`} class="hover:text-white">{site.phone}</a> : <span>{site.phone}</span>}
         </li>
-        <li class="flex items-center gap-2">
-          <Icon name="mail" size={18} class="shrink-0 text-copper-light" />
-          {hasEmail ? <a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a> : <span>{site.email}</span>}
-        </li>
         <li class="flex items-start gap-2">
           <Icon name="clock" size={18} class="mt-0.5 shrink-0 text-copper-light" />
           <span>{site.hours}</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <Icon name="pin" size={18} class="mt-0.5 shrink-0 text-copper-light" />
+          <span>Łódź i okolice</span>
         </li>
       </ul>
     </div>
