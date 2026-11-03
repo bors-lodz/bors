@@ -35,15 +35,19 @@ src/config/pricing.ts
 Każda pozycja ma komentarz `// DO WERYFIKACJI Z KLIENTEM`. Zmieniasz tylko liczby -
 logika przeliczeń jest osobno (`src/lib/estimate.ts`) i nie trzeba jej ruszać.
 
+Stawki są ustawione na poziomie **rynkowym 2026** (na podstawie researchu cenników) i oznaczone
+`// DO WERYFIKACJI Z KLIENTEM` - przed finalnym uruchomieniem potwierdź je z wykonawcą.
+
 Najważniejsze grupy w `pricing.ts`:
 - `labor` - stawki robocizny (punkt wod-kan, punkt c.o., grzejnik, demontaż, hydroizolacja...),
-- `tiling` - układanie płytek wg formatu,
+- `tiling` - układanie płytek wg formatu (w kalkulatorze widoczne: standard i mozaika),
 - `addonsFixed` - dodatki o stałej cenie (stelaż, odpływ liniowy, kabina...),
-- `addonsPerM2` - dodatki za m² (sufit GK, malowanie, ogrzewanie podłogowe),
+- `addonsPerM2` - dodatki za m² (ogrzewanie podłogowe; `sufitGk` jest w modelu, ale ukryty w kalkulatorze),
 - `materialsPerM2` - materiały (standard podstawowy/średni/wysoki),
 - `config` - VAT (domyślnie 8%), czas realizacji, widełki ±15%.
 
-Po zmianie warto uruchomić `npm run test`, żeby sprawdzić, czy przykładowe wyceny się liczą.
+Po zmianie stawek **uruchom `npm run test`** - testy porównują liczby, więc zaktualizuj w nich
+oczekiwane wartości (test pokaże, jaka wyszła nowa kwota).
 
 ---
 
@@ -55,7 +59,12 @@ Plik:
 src/config/site.ts
 ```
 
-Tu ustawiasz telefon, e-mail, godziny pracy, adres, obszar działania, link do map.
+Tu ustawiasz telefon, godziny pracy, obszar działania i datę założenia.
+Telefon (`+48 603 378 228`) i godziny (`9:00-17:00`) są już uzupełnione.
+
+**Uwaga:** adres firmy jest w configu, ale **świadomie NIE jest pokazywany** na stronie (to jednoosobowa
+działalność prowadzona z domu). E-mail również nie jest publikowany - kontakt idzie przez telefon
+i formularz (Web3Forms wysyła zgłoszenia na Twoją skrzynkę, patrz §4).
 
 ---
 
@@ -131,18 +140,35 @@ Używaj wyłącznie autentycznych zdjęć wykonanych prac - bez zdjęć stockowy
 
 Przed publikacją uzupełnij:
 
-| Placeholder | Gdzie | Co wpisać |
+| Placeholder / pozycja | Gdzie | Status / co zrobić |
 |---|---|---|
-| `[TELEFON]` | `src/config/site.ts` (`phone`, `phoneHref`) | numer telefonu (`phoneHref` bez spacji, np. `+48600000000`) |
-| `[EMAIL]` | `src/config/site.ts` (`email`) | adres e-mail firmy |
-| `[GODZINY]` | `src/config/site.ts` (`hours`) | godziny pracy, np. `pon.-pt. 7:00-17:00` |
-| `[WEB3FORMS_KEY]` | `.env` / sekret GitHub | klucz z web3forms.com |
-| domena `bors-lodz.pl` | `astro.config.mjs`, `public/CNAME`, `public/robots.txt` | docelowa domena |
-| współrzędne `geo` | `src/config/site.ts` | dokładna szer./dł. geogr. z Google Maps |
-| stawki `// DO WERYFIKACJI Z KLIENTEM` | `src/config/pricing.ts` | potwierdzić/zmienić ceny i stawkę VAT |
-| `[DO UZUPEŁNIENIA]` | `src/data/services.ts`, strona główna | opinie, liczba realizacji, lata doświadczenia, certyfikaty (dopiero gdy będą prawdziwe) |
+| telefon, godziny | `src/config/site.ts` | ✅ uzupełnione (`+48 603 378 228`, `9:00-17:00`) |
+| domena `bors-lodz.pl` | `astro.config.mjs`, `public/CNAME`, `public/robots.txt` | ✅ ustawiona |
+| `[WEB3FORMS_KEY]` | `.env` / sekret GitHub | klucz z web3forms.com (patrz §4) |
+| stawki `// DO WERYFIKACJI Z KLIENTEM` | `src/config/pricing.ts` | rynkowe 2026 - **potwierdzić z wykonawcą** (po zmianie: `npm run test`) |
+| `[DO UZUPEŁNIENIA]` | `src/data/realizacje.ts`, galeria | podpisy/zdjęcia realizacji (dopiero gdy będą prawdziwe) |
 | zdjęcia realizacji | `public/realizacje/` + `src/data/realizacje.ts` | autentyczne zdjęcia prac |
-| polityka prywatności | `src/pages/polityka-prywatnosci.astro` | weryfikacja prawna szablonu RODO, okres przechowywania danych |
+| `email` | `src/config/site.ts` | nieujawniany na stronie; ustaw, jeśli kiedyś ma być pokazywany |
+| polityka prywatności | `src/pages/polityka-prywatnosci.astro` | realna, minimalna wersja - ewentualnie sprawdzić prawnie |
+| bramka pre-launch | `src/components/SiteGate.astro` | przed startem **usuń** `<SiteGate />` z `BaseLayout.astro` (patrz §8) |
+
+---
+
+## 8. Bramka pre-launch (login/hasło)
+
+Na czas przed startem cała strona jest zasłonięta prostą bramką logowania
+(`src/components/SiteGate.astro`, wpięta w `BaseLayout.astro`).
+
+- **Dane logowania:** login `bors`, hasło `podglad2026`.
+- W kodzie trzymany jest tylko skrót SHA-256 z `login:hasło` (stała `EXPECTED`).
+- **Zmiana loginu/hasła:** policz nowy skrót i wklej do `EXPECTED`:
+  ```bash
+  printf '%s' 'nowylogin:noweHaslo' | shasum -a 256
+  ```
+- **Wyłączenie bramki na starcie:** usuń linię `<SiteGate />` z `src/layouts/BaseLayout.astro` i zrób commit.
+
+> To ochrona „miękka" (treść jest w statycznym HTML i w publicznym repo) - wystarcza, by przypadkowy
+> gość nie klikał po niegotowej stronie, ale nie chroni przed kimś zdeterminowanym.
 
 ---
 
