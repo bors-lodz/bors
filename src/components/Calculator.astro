@@ -27,7 +27,6 @@ const addons = [
   { id: 'wannaZabudowa', label: 'Wanna z zabudową' },
   { id: 'umywalkaSzafka', label: 'Umywalka z szafką i baterią' },
   { id: 'grzejnikLazienkowy', label: 'Grzejnik łazienkowy' },
-  { id: 'sufitGk', label: 'Sufit podwieszany GK' },
   { id: 'ogrzewaniePodlogowe', label: 'Ogrzewanie podłogowe wodne' },
 ] as const;
 
@@ -126,7 +125,7 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
       <div data-group="tiles" class="mt-6">
         <p class="text-sm font-semibold">Format płytek</p>
         <div class="mt-2 flex flex-wrap gap-2">
-          {[['standard', 'Standard (do 60×60)'], ['duzy', 'Duży format (>60×60)'], ['mozaika', 'Mozaika']].map(([v, l], i) => (
+          {[['standard', 'Standard'], ['mozaika', 'Mozaika']].map(([v, l], i) => (
             <label class="opt flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-white px-4 py-2.5 text-sm font-semibold has-[:checked]:border-copper has-[:checked]:bg-copper/5">
               <input type="radio" name="tileFormat" value={v} checked={i === 0} class="accent-[color:var(--color-copper)]" /> {l}
             </label>

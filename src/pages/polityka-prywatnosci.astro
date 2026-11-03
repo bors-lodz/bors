@@ -2,69 +2,62 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
-import { site, hasEmail } from '../config/site';
+import { site } from '../config/site';
 const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', href: '/polityka-prywatnosci' }];
 ---
 <BaseLayout
   title="Polityka prywatności | BORS Łódź"
-  description="Informacja o przetwarzaniu danych osobowych (RODO) w serwisie BORS."
+  description="Informacja o przetwarzaniu danych osobowych (RODO) w serwisie BORS - dane wyłącznie do oddzwonienia i umówienia wyceny."
   jsonLd={[breadcrumbJsonLd(crumbs)]}
   noindex
 >
   <Breadcrumbs items={crumbs} />
   <section class="mx-auto max-w-3xl px-4 py-10 md:py-14">
     <h1 class="text-3xl sm:text-4xl">Polityka prywatności</h1>
-
-    <div class="mt-5 rounded-xl border-2 border-dashed border-copper/40 bg-copper/5 p-4 text-sm text-ink">
-      <strong>Uwaga:</strong> poniższy dokument to szablon przygotowany na podstawie typowych wymogów RODO.
-      Przed publikacją <strong>należy go zweryfikować</strong> (najlepiej z prawnikiem) i uzupełnić dane kontaktowe.
-      <span class="font-semibold">[DO WERYFIKACJI]</span>
-    </div>
+    <p class="mt-3 text-muted">Krótko: dane z formularza wykorzystuję wyłącznie po to, żeby oddzwonić i umówić się na bezpłatną wycenę. Nie buduję z nich bazy marketingowej i nie przekazuję ich dalej.</p>
 
     <div class="prose-bors mt-8 space-y-8">
       <div>
         <h2 class="text-xl">1. Administrator danych</h2>
         <p class="mt-2 text-muted">
-          Administratorem Twoich danych osobowych jest {site.legalName},
-          {site.address.street}, {site.address.postalCode} {site.address.city}, NIP: {site.nip}, REGON: {site.regon}
-          (dalej „BORS”). Kontakt w sprawie danych: {hasEmail ? site.email : '[EMAIL]'}, tel. {site.phone}.
+          Administratorem Twoich danych osobowych jest {site.legalName} (marka „BORS”),
+          NIP: {site.nip}, REGON: {site.regon}. Kontakt w sprawie danych: tel. {site.phone}.
         </p>
       </div>
 
       <div>
-        <h2 class="text-xl">2. Jakie dane przetwarzamy</h2>
+        <h2 class="text-xl">2. Jakie dane przetwarzam</h2>
         <p class="mt-2 text-muted">
-          Przetwarzamy dane, które sam podajesz w formularzu kontaktowym: imię i nazwisko, adres e-mail,
-          opcjonalnie numer telefonu oraz treść wiadomości (w tym podsumowanie z kalkulatora, jeśli je dołączysz).
+          Przetwarzam dane, które sam podajesz w formularzu kontaktowym: imię, numer telefonu,
+          opcjonalnie miejscowość oraz treść wiadomości (w tym podsumowanie z kalkulatora, jeśli je dołączysz).
         </p>
       </div>
 
       <div>
         <h2 class="text-xl">3. Cel i podstawa prawna</h2>
         <p class="mt-2 text-muted">
-          Dane przetwarzamy w celu obsługi Twojego zapytania, przygotowania odpowiedzi i ewentualnej wyceny.
-          Podstawą prawną jest art. 6 ust. 1 lit. a RODO (Twoja zgoda) oraz art. 6 ust. 1 lit. b i f RODO
-          (podjęcie działań na Twoje żądanie przed zawarciem umowy oraz nasz prawnie uzasadniony interes - kontakt
-          z osobą zainteresowaną usługą).
+          Dane przetwarzam w jednym celu: żeby oddzwonić, odpowiedzieć na zapytanie i umówić bezpłatną wycenę.
+          Podstawą prawną jest art. 6 ust. 1 lit. b RODO (podjęcie działań na Twoje żądanie przed zawarciem umowy)
+          oraz art. 6 ust. 1 lit. f RODO (mój prawnie uzasadniony interes - kontakt z osobą zainteresowaną usługą).
         </p>
       </div>
 
       <div>
         <h2 class="text-xl">4. Odbiorcy danych</h2>
         <p class="mt-2 text-muted">
-          Formularz kontaktowy obsługiwany jest przez usługę <strong>Web3Forms</strong> (operator przekazuje treść
-          formularza na nasz adres e-mail). Web3Forms działa jako podmiot przetwarzający dane w naszym imieniu.
-          Dane mogą być także przetwarzane przez dostawcę poczty e-mail oraz dostawcę hostingu strony.
-          Nie sprzedajemy ani nie udostępniamy Twoich danych w celach marketingowych innym podmiotom. <span class="font-semibold">[DO WERYFIKACJI]</span>
+          Formularz kontaktowy obsługuje usługa <strong>Web3Forms</strong>, która przekazuje jego treść na mój adres
+          e-mail i działa jako podmiot przetwarzający w moim imieniu. Dane mogą być także przetwarzane przez dostawcę
+          mojej poczty e-mail oraz dostawcę hostingu strony. Nie sprzedaję ani nie udostępniam Twoich danych w celach
+          marketingowych.
         </p>
       </div>
 
       <div>
         <h2 class="text-xl">5. Okres przechowywania</h2>
         <p class="mt-2 text-muted">
-          Dane z zapytania przechowujemy przez czas niezbędny do obsługi sprawy, a następnie przez okres
-          przedawnienia ewentualnych roszczeń. Jeśli nie dojdzie do współpracy, dane usuwamy, gdy przestają
-          być potrzebne. <span class="font-semibold">[DO WERYFIKACJI - podaj konkretny okres]</span>
+          Dane z zapytania przechowuję tylko przez czas potrzebny do kontaktu i umówienia wyceny. Jeśli nie dojdzie do
+          współpracy, usuwam je, gdy przestają być potrzebne. Jeśli podejmiemy współpracę, dane związane z realizacją
+          przechowuję przez okres wymagany przepisami (m.in. podatkowymi) oraz do czasu przedawnienia ewentualnych roszczeń.
         </p>
       </div>
 
@@ -76,9 +69,7 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', h
           <li>sprostowania (poprawiania) danych,</li>
           <li>usunięcia danych,</li>
           <li>ograniczenia przetwarzania,</li>
-          <li>przenoszenia danych,</li>
           <li>wniesienia sprzeciwu wobec przetwarzania,</li>
-          <li>cofnięcia zgody w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania sprzed cofnięcia),</li>
           <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (PUODO).</li>
         </ul>
       </div>
@@ -86,7 +77,7 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', h
       <div>
         <h2 class="text-xl">7. Dobrowolność podania danych</h2>
         <p class="mt-2 text-muted">
-          Podanie danych jest dobrowolne, ale niezbędne do udzielenia odpowiedzi na zapytanie wysłane przez formularz.
+          Podanie danych jest dobrowolne, ale niezbędne, żebym mógł oddzwonić i przygotować wycenę.
         </p>
       </div>
 
@@ -94,7 +85,6 @@ const crumbs = [{ name: 'Start', href: '/' }, { name: 'Polityka prywatności', h
         <h2 class="text-xl">8. Pliki cookies i analityka</h2>
         <p class="mt-2 text-muted">
           Strona nie korzysta z plików cookies śledzących ani z narzędzi analitycznych firm trzecich.
-          W przypadku dodania takich narzędzi w przyszłości zaktualizujemy politykę i wprowadzimy mechanizm zgody. <span class="font-semibold">[DO WERYFIKACJI]</span>
         </p>
       </div>
     </div>

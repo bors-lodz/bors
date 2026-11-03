@@ -1,200 +1,464 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Icon from '../components/Icon.astro';
-import { servicesByHome, services } from '../data/services';
-import { site, hasPhone } from '../config/site';
+import { site } from '../config/site';
+import { faqJsonLd } from '../lib/seo';
 
-const phoneHref = hasPhone ? `tel:${site.phoneHref}` : '/kontakt';
+const phoneShort = site.phone.replace('+48', '').trim();
+const years = new Date().getFullYear() - site.foundedYear;
 
-const steps = [
-  { t: 'Kontakt', d: 'Dzwonisz lub wysyłasz zapytanie. Opisujesz, co chcesz zrobić.' },
-  { t: 'Bezpłatne oględziny', d: 'Przyjeżdżamy, mierzymy i doradzamy rozwiązania.' },
-  { t: 'Wycena', d: 'Przygotowujemy konkretną, przejrzystą wycenę prac i materiałów.' },
-  { t: 'Realizacja', d: 'Umawiamy termin i realizujemy prace solidnie i na czas.' },
+const faqs = [
+  { q: 'Czy oględziny są płatne?', a: 'Nie. Oględziny są bezpłatne - przyjeżdżam, oceniam zakres prac i na tej podstawie przygotowuję wycenę.' },
+  { q: 'Ile kosztuje punkt wodno-kanalizacyjny?', a: 'Orientacyjnie od 800 zł netto za punkt. Dokładny koszt zależy od stanu instalacji i zakresu prac, dlatego potwierdzam go po oględzinach.' },
+  { q: 'Czy wynik z kalkulatora to ostateczna cena?', a: 'Nie - kalkulator pokazuje orientacyjne widełki z rozbiciem na pozycje i szacowany czas. Wiążącą wycenę przygotowuję po obejrzeniu miejsca.' },
+  { q: 'Gdzie wykonujesz prace?', a: 'W Łodzi oraz w Pabianicach, Zgierzu, Aleksandrowie Łódzkim i Konstantynowie Łódzkim.' },
+  { q: 'Jak najszybciej się skontaktować?', a: 'Telefonicznie pod numerem 603 378 228, pon.-pt. 9:00-17:00, albo przez formularz - oddzwonię w godzinach pracy.' },
 ];
 ---
 <BaseLayout
-  title="Hydraulik i remonty Łódź - instalacje wod-kan, c.o., łazienki | BORS"
-  description="BORS - instalacje wodno-kanalizacyjne, c.o. oraz remonty łazienek, glazura i wykończenia w Łodzi i okolicach. Bezpłatne oględziny i wycena. Oblicz koszt remontu online."
+  title="Hydraulik i remonty Łódź - wod-kan, c.o., glazura, łazienki | BORS"
+  description="BORS - instalacje wodno-kanalizacyjne, c.o. oraz remonty łazienek i glazura w Łodzi i okolicach. Na rynku od 1996 roku. Bezpłatne oględziny i wycena, kalkulator kosztów online."
+  jsonLd={[faqJsonLd(faqs)]}
 >
-  <!-- HERO -->
-  <section class="relative overflow-hidden bg-petrol text-stone">
-    <div class="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
-      <svg width="100%" height="100%"><defs><pattern id="g" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#fff" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
-    </div>
-    <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-[1.15fr_1fr] md:py-24">
-      <div>
-        <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-copper-light">
-          <Icon name="pin" size={16} /> Łódź i okolice
-        </p>
-        <h1 class="text-4xl leading-[1.08] sm:text-5xl">
-          Instalacje wod-kan, c.o. <br class="hidden sm:block" />glazura i remonty łazienek
-        </h1>
-        <p class="mt-5 max-w-xl text-lg text-stone/85">
-          Remontujemy łazienki, wykonujemy instalacje wodno-kanalizacyjne i grzewcze,
-          układamy glazurę i terakotę. Solidnie, terminowo, z bezpłatną wyceną.
-        </p>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href={phoneHref} class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 text-base font-bold text-white shadow-lg transition-colors hover:bg-copper-light">
-            <Icon name="phone" size={20} /> {hasPhone ? site.phone : 'Zadzwoń do nas'}
-          </a>
-          <a href="/kalkulator" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 bg-white/5 px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-white/15">
-            <Icon name="calc" size={20} /> Oblicz koszt remontu
-          </a>
-        </div>
-        <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone/80">
-          <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Bezpłatne oględziny</li>
-          <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Przejrzysta wycena</li>
-          <li class="flex items-center gap-2"><Icon name="check" size={18} class="text-copper-light" /> Solidnie i terminowo</li>
-        </ul>
-      </div>
+<!-- HERO -->
+<section style="padding:4.5rem 0 5rem;">
+<div class="wrap hero-grid">
+<div>
+<p class="mono sec-label" style="color:#a8521f;margin:0 0 2rem;">Hydraulik i glazurnik - Łódź, od 1996</p>
+<h1 class="disp" style="font-size:clamp(3rem,6.4vw,6.2rem);line-height:0.95;font-weight:600;margin:0 0 2rem;">Łazienki i&nbsp;instalacje. <em style="font-weight:400;color:#0e4650;">Od rury</em> do <span style="position:relative;white-space:nowrap;">fugi<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;left:0;bottom:-0.12em;width:100%;height:0.16em;"><rect x="0" y="4" width="200" height="6" fill="#a8521f"></rect></svg></span>.</h1>
+<p style="font-size:1.25rem;max-width:34rem;margin:0 0 2.4rem;color:#3a4749;">Remonty łazienek, instalacje wodno-kanalizacyjne i grzewcze oraz glazura i terakota - w Łodzi i okolicach. Najpierw bezpłatne oględziny, potem przejrzysta wycena z rozbiciem na pozycje - zanim cokolwiek skuję.</p>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem;">
+<a class="btn-cu" href={`tel:${site.phoneHref}`} style="display:inline-flex;align-items:center;gap:1rem;background:#a8521f;color:#ffffff;text-decoration:none;padding:1rem 1.8rem 1rem 1rem;">
+<span style="display:flex;align-items:center;justify-content:center;width:46px;height:46px;background:#f3ede3;color:#a8521f;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>
+</span>
+<span style="display:flex;flex-direction:column;line-height:1.15;">
+<span class="mono" style="font-size:0.74rem;">Zadzwoń - pon.-pt. 9:00-17:00</span>
+<span class="disp" style="font-size:1.9rem;font-weight:700;letter-spacing:0;">{phoneShort}</span>
+</span>
+</a>
+<a class="btn-ink" href="/kalkulator" style="display:inline-flex;align-items:center;gap:0.9rem;border:1.5px solid #17262a;text-decoration:none;padding:1rem 1.4rem;">
+<span style="display:flex;flex-direction:column;line-height:1.2;">
+<span class="mono" style="font-size:0.72rem;color:#4a5557;">2 minuty, bez logowania</span>
+<span style="font-weight:600;">Policz koszt remontu</span>
+</span>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+<ul style="list-style:none;padding:0;margin:2.2rem 0 0;display:flex;flex-wrap:wrap;gap:0.7rem 1.8rem;font-weight:600;font-size:0.98rem;">
+<li style="display:inline-flex;align-items:center;gap:0.6rem;"><span style="width:0.7rem;height:0.7rem;background:#a8521f;flex:none;"></span>Oględziny za 0 zł</li>
+<li style="display:inline-flex;align-items:center;gap:0.6rem;"><span style="width:0.7rem;height:0.7rem;background:#a8521f;flex:none;"></span>Wycena pozycja po pozycji</li>
+<li style="display:inline-flex;align-items:center;gap:0.6rem;"><span style="width:0.7rem;height:0.7rem;background:#a8521f;flex:none;"></span>Na rynku od 1996</li>
+</ul>
+</div>
 
-      <!-- ilustracja (bez zdjęć realizacji) -->
-      <div class="hidden md:block" aria-hidden="true">
-        <svg viewBox="0 0 400 360" class="mx-auto w-full max-w-sm drop-shadow-2xl">
-          <rect x="20" y="20" width="360" height="320" rx="24" fill="#0A3A43"/>
-          <g>
-            <rect x="52" y="52" width="130" height="130" rx="10" fill="#F5F3EF"/>
-            <rect x="200" y="52" width="130" height="130" rx="10" fill="#F5F3EF"/>
-            <rect x="52" y="200" width="130" height="130" rx="10" fill="#F5F3EF"/>
-            <rect x="200" y="200" width="130" height="130" rx="10" fill="#C26B35"/>
-          </g>
-          <g stroke="#10505C" stroke-width="10" fill="none" stroke-linecap="round">
-            <path d="M104 150 V96 Q104 84 116 84 H150"/>
-          </g>
-          <circle cx="265" cy="265" r="26" fill="none" stroke="#F5F3EF" stroke-width="10"/>
-        </svg>
-      </div>
-    </div>
-  </section>
+<!-- Tile wall with opened installation -->
+<div class="wall">
+<div style="background:#d6c9b4;padding:7px;border:1px solid #9c8c74;">
+<svg viewBox="0 0 600 600" role="img" aria-label="Ilustracja: ściana z płytkami, w odkrytym fragmencie widać instalację - pion wody zimnej i ciepłej, zawory odcinające oraz odpływ" style="display:block;width:100%;height:auto;">
+<defs>
+<pattern id="bmTile" width="75" height="75" patternUnits="userSpaceOnUse"><rect width="75" height="75" fill="#d6c9b4"></rect><rect x="2.5" y="2.5" width="70" height="70" fill="#f3ede3"></rect></pattern>
+<pattern id="bmHatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#e6dccb"></rect><line x1="0" y1="0" x2="0" y2="12" stroke="#d6c9b4" stroke-width="2"></line></pattern>
+</defs>
+<rect width="600" height="600" fill="url(#bmTile)"></rect>
+<rect x="377.5" y="77.5" width="70" height="70" fill="#e3d6c2"></rect>
+<rect x="2.5" y="527.5" width="70" height="70" fill="#e3d6c2"></rect>
+<rect x="527.5" y="227.5" width="70" height="70" fill="#e3d6c2"></rect>
+<rect x="527.5" y="452.5" width="70" height="70" fill="#0e4650"></rect>
+<rect class="tile-drop" x="452.5" y="2.5" width="70" height="70" fill="#a8521f"></rect>
+<rect x="75" y="150" width="300" height="375" fill="url(#bmHatch)"></rect>
+<rect x="75" y="150" width="300" height="375" fill="none" stroke="#9c8c74" stroke-width="1.5"></rect>
+<path d="M120 525 V215 Q120 195 140 195 H300" fill="none" stroke="#0e4650" stroke-width="8" stroke-linecap="round"></path>
+<path d="M155 525 V250 Q155 230 175 230 H300" fill="none" stroke="#a8521f" stroke-width="8" stroke-linecap="round"></path>
+<path class="flow" d="M155 525 V250 Q155 230 175 230 H300" fill="none" stroke="#f3ede3" stroke-width="2"></path>
+<rect x="298" y="188" width="16" height="14" fill="#17262a"></rect>
+<rect x="298" y="223" width="16" height="14" fill="#17262a"></rect>
+<g fill="#f3ede3" stroke="#17262a" stroke-width="2" stroke-linejoin="round">
+<path d="M212 185 L232 205 V185 L212 205 Z"></path>
+<path d="M212 220 L232 240 V220 L212 240 Z"></path>
+</g>
+<path d="M270 525 V430 Q270 400 300 400 H345" fill="none" stroke="#4a5557" stroke-width="16"></path>
+<path d="M270 525 V430 Q270 400 300 400 H345" fill="none" stroke="#e6dccb" stroke-width="9"></path>
+<g stroke="#4a5557" stroke-width="1.2">
+<line x1="75" y1="118" x2="75" y2="140"></line>
+<line x1="375" y1="118" x2="375" y2="140"></line>
+<line x1="75" y1="129" x2="375" y2="129"></line>
+</g>
+<path d="M75 129 l10 -4 v8 z M375 129 l-10 -4 v8 z" fill="#4a5557"></path>
+<rect x="199" y="120" width="52" height="18" fill="#f3ede3"></rect>
+<text x="225" y="134" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#17262a">1200</text>
+<g stroke="#4a5557" stroke-width="1.2">
+<line x1="28" y1="150" x2="50" y2="150"></line>
+<line x1="28" y1="525" x2="50" y2="525"></line>
+<line x1="39" y1="150" x2="39" y2="525"></line>
+</g>
+<path d="M39 150 l-4 10 h8 z M39 525 l-4 -10 h8 z" fill="#4a5557"></path>
+<rect x="30" y="311" width="18" height="52" fill="#f3ede3"></rect>
+<text x="44" y="337" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#17262a" transform="rotate(-90 44 337)">1500</text>
+<g stroke="#a8521f" stroke-width="1.5">
+<line x1="234" y1="213" x2="424" y2="213"></line>
+<line x1="160" y1="330" x2="424" y2="330"></line>
+<line x1="345" y1="404" x2="426" y2="440"></line>
+</g>
+<g font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">
+<circle cx="440" cy="213" r="15" fill="#f3ede3" stroke="#a8521f" stroke-width="2"></circle>
+<text x="440" y="218" fill="#a8521f">1</text>
+<circle cx="440" cy="330" r="15" fill="#f3ede3" stroke="#a8521f" stroke-width="2"></circle>
+<text x="440" y="335" fill="#a8521f">2</text>
+<circle cx="440" cy="446" r="15" fill="#f3ede3" stroke="#a8521f" stroke-width="2"></circle>
+<text x="440" y="451" fill="#a8521f">3</text>
+</g>
+</svg>
+</div>
+<ol class="mono" style="list-style:none;margin:0.9rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:0.4rem 1.6rem;font-size:0.74rem;color:#4a5557;">
+<li><span style="color:#a8521f;font-weight:700;">1</span> Zawory odcinające</li>
+<li><span style="color:#a8521f;font-weight:700;">2</span> Piony wody zimnej i ciepłej</li>
+<li><span style="color:#a8521f;font-weight:700;">3</span> Odpływ</li>
+<li>Rys. poglądowy</li>
+</ol>
+<div class="tag" style="background:#0e4650;color:#f3ede3;padding:1rem 1.3rem;max-width:16rem;">
+<div class="mono" style="font-size:0.7rem;color:#e8a27a;">Stawka orientacyjna</div>
+<div class="disp" style="font-size:2.6rem;font-weight:700;line-height:1;margin-top:0.3rem;">od 800 zł</div>
+<div class="mono" style="font-size:0.72rem;color:#d5dfdc;margin-top:0.3rem;">netto / punkt wod-kan</div>
+</div>
+</div>
+</div>
+</section>
 
-  <!-- USŁUGI -->
-  <section id="uslugi" class="mx-auto max-w-6xl px-4 py-16 md:py-20">
-    <div class="mb-10 max-w-2xl">
-      <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Co robimy</p>
-      <h2 class="text-3xl sm:text-4xl">Nasze usługi</h2>
-      <p class="mt-3 text-lg text-muted">Od pojedynczej instalacji po kompleksowy remont - wszystko z jedną, sprawdzoną ekipą.</p>
-    </div>
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {servicesByHome.map((s) => (
-        <a href={`/uslugi/${s.slug}`} class="group flex flex-col rounded-2xl border border-line bg-white p-6 transition-all hover:-translate-y-1 hover:border-copper/40 hover:shadow-lg">
-          <span class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-stone text-petrol transition-colors group-hover:bg-copper group-hover:text-white">
-            <Icon name={s.icon} size={26} />
-          </span>
-          <h3 class="text-lg font-bold">{s.cardTitle}</h3>
-          <p class="mt-2 flex-1 text-sm text-muted">{s.cardDesc}</p>
-          <span class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-copper">Zobacz więcej <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-1" /></span>
-        </a>
-      ))}
-    </div>
-    <p class="mt-6 text-sm text-muted">
-      Zajmujemy się też <a href="/uslugi/remonty-wykonczenia" class="font-semibold text-copper hover:underline">remontami i wykończeniami</a> (sufity GK, gładzie, malowanie, zabudowy).
-    </p>
-  </section>
+<!-- FACT STRIP -->
+<section aria-label="Najważniejsze informacje" style="padding:0 0 1rem;">
+<div class="wrap">
+<div class="facts">
+<div style="background:#f3ede3;padding:1.6rem 1.8rem;">
+<div class="disp" style="font-size:3rem;font-weight:600;line-height:1;">od 1996</div>
+<div style="margin-top:0.5rem;color:#3a4749;">ponad {years} lat w instalacjach i remontach</div>
+</div>
+<div style="background:#f3ede3;padding:1.6rem 1.8rem;">
+<div class="disp" style="font-size:3rem;font-weight:600;line-height:1;">0 zł</div>
+<div style="margin-top:0.5rem;color:#3a4749;">za oględziny na miejscu</div>
+</div>
+<div style="background:#f3ede3;padding:1.6rem 1.8rem;">
+<div class="disp" style="font-size:3rem;font-weight:600;line-height:1;">5 miast</div>
+<div style="margin-top:0.5rem;color:#3a4749;">Łódź, Pabianice, Zgierz, Aleksandrów Ł., Konstantynów Ł.</div>
+</div>
+<div style="background:#17262a;color:#f3ede3;padding:1.6rem 1.8rem;display:flex;flex-direction:column;justify-content:space-between;gap:0.6rem;">
+<span class="mono" style="font-size:0.74rem;color:#e8a27a;">pon.-pt. 9:00-17:00</span>
+<a href={`tel:${site.phoneHref}`} class="disp" style="font-size:2.1rem;font-weight:700;text-decoration:none;line-height:1.05;">{phoneShort}</a>
+</div>
+</div>
+</div>
+</section>
 
-  <!-- KALKULATOR CTA -->
-  <section class="bg-stone">
-    <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
-      <div class="grid items-center gap-8 rounded-3xl bg-petrol px-6 py-10 text-stone md:grid-cols-[1.4fr_1fr] md:px-12 md:py-14">
-        <div>
-          <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper-light">Kalkulator online</p>
-          <h2 class="text-3xl text-stone sm:text-4xl">Policz orientacyjny koszt remontu w 2 minuty</h2>
-          <p class="mt-4 max-w-xl text-lg text-stone/85">
-            Wybierz zakres prac, podaj metraż i od razu zobacz widełki cenowe oraz szacowany czas.
-            Bez logowania, bez zobowiązań.
-          </p>
-          <a href="/kalkulator" class="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 text-base font-bold text-white shadow-lg transition-colors hover:bg-copper-light">
-            <Icon name="calc" size={20} /> Przejdź do kalkulatora
-          </a>
-        </div>
-        <ul class="space-y-3 md:border-l md:border-white/15 md:pl-10">
-          {['Widełki cenowe z rozbiciem na pozycje','Szacowany czas realizacji','Gotowe zapytanie do wysłania'].map((t) => (
-            <li class="flex items-start gap-3 text-stone/90"><Icon name="check" size={20} class="mt-0.5 shrink-0 text-copper-light" /> {t}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
+<!-- SERVICES -->
+<section id="uslugi" style="padding:6rem 0 6rem;">
+<div class="wrap">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:3rem;">
+<div>
+<p class="mono sec-label" style="color:#a8521f;margin:0 0 1.4rem;">01 / Usługi</p>
+<h2 class="disp" style="font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1;font-weight:600;margin:0;max-width:16ch;">Cztery zakresy prac. <em style="font-weight:400;color:#0e4650;">Jeden fachowiec.</em></h2>
+</div>
+<p style="max-width:26rem;margin:0;color:#3a4749;">Od rozprowadzenia rur po ostatnią fugę - bez szukania osobno hydraulika i glazurnika.</p>
+</div>
 
-  <!-- JAK PRACUJEMY -->
-  <section class="mx-auto max-w-6xl px-4 py-16 md:py-20">
-    <div class="mb-10 max-w-2xl">
-      <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Prosto i bez niespodzianek</p>
-      <h2 class="text-3xl sm:text-4xl">Jak pracujemy</h2>
-    </div>
-    <ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {steps.map((step, i) => (
-        <li class="relative rounded-2xl border border-line bg-white p-6">
-          <span class="font-display text-4xl font-extrabold text-stone-dark" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="mt-2 text-lg font-bold">{step.t}</h3>
-          <p class="mt-2 text-sm text-muted">{step.d}</p>
-        </li>
-      ))}
-    </ol>
-  </section>
+<div class="svc-head mono" aria-hidden="true" style="display:grid;grid-template-columns:5.5rem 1.35fr 1.2fr 3.5rem;gap:2rem;padding:0 1.5rem 0.8rem;font-size:0.72rem;color:#4a5557;">
+<span>Poz.</span><span>Usługa</span><span>Zakres prac</span><span></span>
+</div>
+<div style="border-bottom:1px solid #cdbfa8;">
+<a class="svc" href="/uslugi/remonty-lazienek">
+<span style="display:flex;flex-direction:column;gap:0.3rem;"><span class="disp svc-num" style="font-size:2.6rem;font-weight:300;color:#a8521f;line-height:1;">01</span><span class="mono svc-code" style="font-size:0.72rem;color:#4a5557;">ŁZ</span></span>
+<span><span class="disp" style="display:block;font-size:clamp(1.6rem,2.6vw,2.35rem);font-weight:600;line-height:1.1;">Kompleksowe remonty łazienek</span><span class="mono" style="display:inline-block;margin-top:0.7rem;font-size:0.72rem;background:#17262a;color:#f3ede3;padding:0.25rem 0.55rem;">Kompleksowo</span></span>
+<span class="svc-desc" style="color:#4a5557;font-size:1rem;">Demontaż, przeróbki wod-kan, hydroizolacja, płytki, biały montaż. Sam prowadzę od pierwszego skucia do odbioru.</span>
+<span class="svc-arrow" style="display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border:1.5px solid currentColor;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+<a class="svc" href="/uslugi/instalacje-wodno-kanalizacyjne">
+<span style="display:flex;flex-direction:column;gap:0.3rem;"><span class="disp svc-num" style="font-size:2.6rem;font-weight:300;color:#a8521f;line-height:1;">02</span><span class="mono svc-code" style="font-size:0.72rem;color:#4a5557;">WK</span></span>
+<span><span class="disp" style="display:block;font-size:clamp(1.6rem,2.6vw,2.35rem);font-weight:600;line-height:1.1;">Instalacje wodno-kanalizacyjne</span><span class="mono" style="display:inline-block;margin-top:0.7rem;font-size:0.72rem;background:#a8521f;color:#ffffff;padding:0.25rem 0.55rem;">Punkt od 800 zł netto</span></span>
+<span class="svc-desc" style="color:#4a5557;font-size:1rem;">Nowe podejścia, wymiana rur i pionów, przeróbki pod nowy układ łazienki lub kuchni, podłączenia urządzeń.</span>
+<span class="svc-arrow" style="display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border:1.5px solid currentColor;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+<a class="svc" href="/uslugi/instalacje-grzewcze">
+<span style="display:flex;flex-direction:column;gap:0.3rem;"><span class="disp svc-num" style="font-size:2.6rem;font-weight:300;color:#a8521f;line-height:1;">03</span><span class="mono svc-code" style="font-size:0.72rem;color:#4a5557;">CO</span></span>
+<span class="disp" style="font-size:clamp(1.6rem,2.6vw,2.35rem);font-weight:600;line-height:1.1;">Instalacje grzewcze (c.o.)</span>
+<span class="svc-desc" style="color:#4a5557;font-size:1rem;">Montaż i wymiana grzejników, przeróbki i rozbudowa instalacji centralnego ogrzewania.</span>
+<span class="svc-arrow" style="display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border:1.5px solid currentColor;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+<a class="svc" href="/uslugi/glazura-terakota">
+<span style="display:flex;flex-direction:column;gap:0.3rem;"><span class="disp svc-num" style="font-size:2.6rem;font-weight:300;color:#a8521f;line-height:1;">04</span><span class="mono svc-code" style="font-size:0.72rem;color:#4a5557;">GT</span></span>
+<span class="disp" style="font-size:clamp(1.6rem,2.6vw,2.35rem);font-weight:600;line-height:1.1;">Glazura i terakota</span>
+<span class="svc-desc" style="color:#4a5557;font-size:1rem;">Układanie płytek na ścianach i podłogach - w łazience i kuchni. Fugowanie, docinki i narożniki.</span>
+<span class="svc-arrow" style="display:flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border:1.5px solid currentColor;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+</div>
 
-  <!-- OBSZAR DZIAŁANIA -->
-  <section class="bg-stone">
-    <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
-      <div class="grid items-center gap-8 md:grid-cols-2">
-        <div>
-          <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Gdzie działamy</p>
-          <h2 class="text-3xl sm:text-4xl">Łódź i okolice</h2>
-          <p class="mt-4 text-lg text-muted">
-            Realizujemy zlecenia na terenie całej Łodzi oraz w miejscowościach sąsiednich.
-            Dojeżdżamy na bezpłatne oględziny.
-          </p>
-          <ul class="mt-6 flex flex-wrap gap-2">
-            {site.areaServed.map((city) => (
-              <li class="rounded-full border border-line bg-white px-4 py-1.5 text-sm font-semibold text-ink">{city}</li>
-            ))}
-          </ul>
-        </div>
-        <div class="rounded-2xl border border-line bg-white p-8 text-center">
-          <Icon name="pin" size={40} class="mx-auto text-copper" />
-          <p class="mt-4 font-bold">Łódź i okolice</p>
-          <p class="text-muted">Dojazd na terenie miasta i miejscowości sąsiednich</p>
-          <a href="/kontakt" class="mt-5 inline-flex items-center gap-1 text-sm font-bold text-copper hover:underline">Dane kontaktowe <Icon name="arrow" size={16} /></a>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- not sure band -->
+<div style="margin-top:3rem;background:#17262a;color:#f3ede3;padding:2rem 2.2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
+<div style="max-width:40rem;">
+<p class="disp" style="margin:0;font-size:clamp(1.5rem,2.4vw,2rem);font-weight:600;line-height:1.15;">Nie wiesz, od czego zacząć?</p>
+<p style="margin:0.4rem 0 0;color:#c2c9c7;">Opisz problem przez telefon - przyjadę obejrzeć za darmo i powiem, co trzeba zrobić.</p>
+</div>
+<a class="btn-cu" href={`tel:${site.phoneHref}`} style="display:inline-flex;align-items:center;gap:0.7rem;background:#a8521f;color:#ffffff;text-decoration:none;font-weight:600;padding:0.95rem 1.4rem;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>
+Zadzwoń: {phoneShort}
+</a>
+</div>
+</div>
+</section>
 
-  <!-- REALIZACJE (placeholder) -->
-  <section class="mx-auto max-w-6xl px-4 py-16 md:py-20">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <div class="max-w-2xl">
-        <p class="mb-2 font-display text-sm font-bold uppercase tracking-wider text-copper">Portfolio</p>
-        <h2 class="text-3xl sm:text-4xl">Realizacje</h2>
-        <p class="mt-3 text-lg text-muted">Galeria naszych prac. Zdjęcia dodamy wkrótce.</p>
-      </div>
-      <a href="/realizacje" class="inline-flex items-center gap-1 text-sm font-bold text-copper hover:underline">Zobacz galerię <Icon name="arrow" size={16} /></a>
-    </div>
-    <!-- DO UZUPEŁNIENIA: prawdziwe zdjęcia realizacji (patrz src/data/realizacje.ts). Poniżej neutralne ilustracje. -->
-    <div class="grid gap-5 sm:grid-cols-3">
-      {['Łazienki', 'Instalacje', 'Glazura'].map((label, i) => (
-        <div class="flex aspect-[4/3] flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-stone text-center">
-          <Icon name={(['bath','pipe','tiles'] as const)[i]} size={40} class="text-petrol/40" />
-          <p class="mt-3 text-sm font-semibold text-muted">{label}</p>
-          <p class="text-xs text-muted/70">zdjęcia wkrótce</p>
-        </div>
-      ))}
-    </div>
-  </section>
+<!-- CALCULATOR -->
+<section id="kalkulator" style="background:#0e4650;color:#f3ede3;padding:7rem 0;position:relative;overflow:hidden;">
+<svg aria-hidden="true" width="420" height="420" viewBox="0 0 420 420" style="position:absolute;right:-90px;top:-90px;opacity:0.12;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="318" y="0" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="318" y="106" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect><rect x="318" y="212" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g></svg>
+<div class="wrap calc-grid" style="position:relative;">
+<div>
+<p class="mono sec-label" style="color:#e8a27a;margin:0 0 1.4rem;">02 / Kalkulator online</p>
+<h2 class="disp" style="font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1;font-weight:600;margin:0 0 1.8rem;">Ile kosztuje Twój remont? <em style="font-weight:400;color:#e8a27a;">Sprawdź, zanim zadzwonisz.</em></h2>
+<p style="font-size:1.15rem;color:#d5dfdc;max-width:32rem;margin:0 0 2.2rem;">Zaznaczasz zakres prac, podajesz metraż i liczbę punktów - dostajesz widełki cenowe z rozbiciem na pozycje, szacowany czas i gotowe zapytanie do wysłania. Bez logowania.</p>
+<ul style="list-style:none;margin:0 0 2.6rem;padding:0;border-top:1px solid #2e6670;">
+<li style="display:flex;gap:1rem;align-items:center;padding:0.85rem 0;border-bottom:1px solid #2e6670;"><span class="mono" style="color:#e8a27a;font-size:0.8rem;">01</span>Widełki od - do, nie jedna „magiczna” kwota</li>
+<li style="display:flex;gap:1rem;align-items:center;padding:0.85rem 0;border-bottom:1px solid #2e6670;"><span class="mono" style="color:#e8a27a;font-size:0.8rem;">02</span>Każda pozycja rozpisana osobno</li>
+<li style="display:flex;gap:1rem;align-items:center;padding:0.85rem 0;border-bottom:1px solid #2e6670;"><span class="mono" style="color:#e8a27a;font-size:0.8rem;">03</span>Szacowany czas prac</li>
+<li style="display:flex;gap:1rem;align-items:center;padding:0.85rem 0;border-bottom:1px solid #2e6670;"><span class="mono" style="color:#e8a27a;font-size:0.8rem;">04</span>Wynik wysyłasz od razu jako zapytanie</li>
+</ul>
+<a class="btn-light" href="/kalkulator" style="display:inline-flex;align-items:center;gap:0.8rem;background:#f3ede3;color:#17262a;text-decoration:none;font-weight:600;padding:1rem 1.6rem;transition:background .2s ease;">Otwórz pełny kalkulator
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
 
-  <!-- KONTAKT CTA -->
-  <section class="bg-petrol-dark">
-    <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center text-stone md:py-20">
-      <h2 class="max-w-2xl text-3xl text-stone sm:text-4xl">Masz pytanie albo chcesz wycenę? Odezwij się.</h2>
-      <p class="max-w-xl text-lg text-stone/80">Oględziny i wycena są bezpłatne i do niczego nie zobowiązują.</p>
-      <div class="flex flex-col gap-3 sm:flex-row">
-        <a href={phoneHref} class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-copper-light">
-          <Icon name="phone" size={20} /> {hasPhone ? site.phone : 'Zadzwoń do nas'}
-        </a>
-        <a href="/kontakt" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-white/10">
-          <Icon name="mail" size={20} /> Formularz kontaktowy
-        </a>
-      </div>
-    </div>
-  </section>
+<!-- input + receipt (przykład - linkuje do pełnego kalkulatora) -->
+<div style="position:relative;">
+<div class="mono" style="position:absolute;top:-1rem;left:1.5rem;background:#a8521f;color:#ffffff;font-size:0.74rem;padding:0.4rem 0.8rem;z-index:2;">Przykład - wartości poglądowe</div>
+<form action="/kalkulator" method="get" aria-label="Szybka wycena - przykład" style="background:#f3ede3;color:#17262a;padding:2.4rem 2rem 1.8rem;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;border-bottom:2px solid #17262a;padding-bottom:0.9rem;margin-bottom:1.4rem;">
+<span class="disp" style="font-size:1.5rem;font-weight:600;">Wycena wstępna</span>
+<span class="mono" style="font-size:0.72rem;color:#4a5557;">Przykład</span>
+</div>
+<fieldset style="border:0;padding:0;margin:0 0 1.3rem;">
+<legend class="mono" style="font-size:0.74rem;color:#4a5557;margin-bottom:0.6rem;padding:0;">Co robię?</legend>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+<input class="chip-in" type="radio" name="zakres" id="bm-z1" value="lazienka" checked /><label class="chip" for="bm-z1">Łazienka</label>
+<input class="chip-in" type="radio" name="zakres" id="bm-z2" value="wod-kan" /><label class="chip" for="bm-z2">Wod-kan</label>
+<input class="chip-in" type="radio" name="zakres" id="bm-z3" value="co" /><label class="chip" for="bm-z3">C.o.</label>
+<input class="chip-in" type="radio" name="zakres" id="bm-z4" value="glazura" /><label class="chip" for="bm-z4">Glazura</label>
+</div>
+</fieldset>
+<div class="form-2" style="display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem;align-items:end;margin-bottom:1.6rem;">
+<div>
+<label for="bm-m2" class="mono" style="display:flex;justify-content:space-between;font-size:0.74rem;color:#4a5557;margin-bottom:0.6rem;"><span>Metraż łazienki</span><span style="color:#17262a;font-weight:700;">5 m²</span></label>
+<input class="range" id="bm-m2" name="metraz" type="range" min="2" max="14" value="5" />
+</div>
+<div>
+<label for="bm-pkt" class="mono" style="display:block;font-size:0.74rem;color:#4a5557;margin-bottom:0.6rem;">Punkty wod-kan</label>
+<input class="inp" id="bm-pkt" name="punkty" type="number" min="1" max="20" value="4" />
+</div>
+</div>
+<div style="display:grid;">
+<div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-top:1px dashed #9c8c74;border-bottom:1px dashed #9c8c74;">
+<span>Punkty wod-kan × 4<span class="mono" style="display:block;font-size:0.7rem;color:#0e4650;">stawka orientacyjna: od 800 zł / pkt</span></span>
+<strong style="white-space:nowrap;">od 3 200 zł</strong>
+</div>
+<div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-bottom:1px dashed #9c8c74;">
+<span>Demontaż i przygotowanie</span>
+<span class="mono" style="font-size:0.78rem;color:#4a5557;white-space:nowrap;">w kalkulatorze</span>
+</div>
+<div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-bottom:1px dashed #9c8c74;">
+<span>Hydroizolacja i glazura</span>
+<span class="mono" style="font-size:0.78rem;color:#4a5557;white-space:nowrap;">w kalkulatorze</span>
+</div>
+<div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-bottom:1px dashed #9c8c74;">
+<span>Biały montaż</span>
+<span class="mono" style="font-size:0.78rem;color:#4a5557;white-space:nowrap;">w kalkulatorze</span>
+</div>
+</div>
+<div style="margin-top:1.3rem;background:#17262a;color:#f3ede3;padding:1.1rem 1.3rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+<span><span class="mono" style="display:block;font-size:0.74rem;color:#e8a27a;">Pełne widełki policzysz w kalkulatorze</span><span class="disp" style="font-size:1.7rem;font-weight:600;">Twoja wycena w 2 min</span></span>
+</div>
+<button type="submit" class="btn-cu" style="margin-top:1.3rem;width:100%;display:flex;align-items:center;justify-content:center;gap:0.7rem;background:#a8521f;color:#ffffff;border:0;font:inherit;font-weight:600;padding:1rem 1.4rem;cursor:pointer;">Przelicz w pełnym kalkulatorze
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+<p style="margin:0.9rem 0 0;font-size:0.88rem;color:#4a5557;">Wycena orientacyjna. Ostateczna kwota po bezpłatnych oględzinach.</p>
+</form>
+<div aria-hidden="true" style="height:14px;background:radial-gradient(circle at 10px 0,transparent 8px,#f3ede3 8.5px) 0 0/20px 14px repeat-x;"></div>
+</div>
+</div>
+</section>
+
+<!-- PROCESS -->
+<section aria-labelledby="bm-proces" style="padding:7rem 0 7rem;">
+<div class="wrap">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:2rem;align-items:end;margin-bottom:3.5rem;">
+<div>
+<p class="mono sec-label" style="color:#a8521f;margin:0 0 1.4rem;">03 / Jak pracuję</p>
+<h2 id="bm-proces" class="disp" style="font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1;font-weight:600;margin:0;">Cztery kroki, <em style="font-weight:400;color:#0e4650;">płytka po płytce.</em></h2>
+</div>
+<p style="margin:0;color:#3a4749;max-width:28rem;">Zanim cokolwiek zaczniemy, wiesz co, za ile i kiedy. Oględziny i wycena nic nie kosztują.</p>
+</div>
+<ol class="steps" style="list-style:none;margin:0;">
+<li class="step" style="background:#f3ede3;padding:2rem 1.8rem 2.2rem;min-height:18rem;display:flex;flex-direction:column;justify-content:space-between;">
+<span class="disp" style="font-size:5.5rem;font-weight:300;line-height:0.8;color:#a8521f;">1</span>
+<div><h3 class="disp" style="font-size:1.7rem;font-weight:600;margin:1.5rem 0 0.6rem;">Kontakt</h3>
+<p style="margin:0;color:#4a5557;">Dzwonisz lub wysyłasz formularz albo zapytanie z kalkulatora.</p>
+<p class="mono" style="margin:1rem 0 0;font-size:0.72rem;color:#4a5557;">Tel. / formularz</p></div>
+</li>
+<li class="step" style="background:#f3ede3;padding:2rem 1.8rem 2.2rem;min-height:18rem;display:flex;flex-direction:column;justify-content:space-between;">
+<span class="disp" style="font-size:5.5rem;font-weight:300;line-height:0.8;color:#a8521f;">2</span>
+<div><h3 class="disp" style="font-size:1.7rem;font-weight:600;margin:1.5rem 0 0.6rem;">Bezpłatne oględziny</h3>
+<p style="margin:0;color:#4a5557;">Przyjeżdżam na miejsce, mierzę i sprawdzam stan instalacji.</p>
+<p class="mono" style="margin:1rem 0 0;font-size:0.72rem;color:#4a5557;">Pomiar / ocena stanu</p></div>
+</li>
+<li class="step" style="background:#f3ede3;padding:2rem 1.8rem 2.2rem;min-height:18rem;display:flex;flex-direction:column;justify-content:space-between;">
+<span class="disp" style="font-size:5.5rem;font-weight:300;line-height:0.8;color:#a8521f;">3</span>
+<div><h3 class="disp" style="font-size:1.7rem;font-weight:600;margin:1.5rem 0 0.6rem;">Wycena</h3>
+<p style="margin:0;color:#4a5557;">Dostajesz przejrzystą wycenę z rozbiciem na pozycje. Wiesz, za co płacisz.</p>
+<p class="mono" style="margin:1rem 0 0;font-size:0.72rem;color:#4a5557;">Kosztorys / termin</p></div>
+</li>
+<li class="step" style="background:#a8521f;color:#ffffff;padding:2rem 1.8rem 2.2rem;min-height:18rem;display:flex;flex-direction:column;justify-content:space-between;">
+<span class="disp" style="font-size:5.5rem;font-weight:300;line-height:0.8;color:#f3ede3;">4</span>
+<div><h3 class="disp" style="font-size:1.7rem;font-weight:600;margin:1.5rem 0 0.6rem;">Realizacja</h3>
+<p style="margin:0;color:#fbeee4;">Wykonuję prace w ustalonym zakresie i terminie, a na koniec odbierasz gotowe wnętrze.</p>
+<p class="mono" style="margin:1rem 0 0;font-size:0.72rem;color:#fbeee4;">Wykonanie / odbiór</p></div>
+</li>
+</ol>
+</div>
+</section>
+
+<!-- AREA -->
+<section aria-labelledby="bm-obszar" style="background:#e9dfcf;padding:7rem 0;">
+<div class="wrap area-grid">
+<div>
+<p class="mono sec-label" style="color:#8c431a;margin:0 0 1.4rem;">04 / Obszar działania</p>
+<h2 id="bm-obszar" class="disp" style="font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1;font-weight:600;margin:0 0 1.8rem;">Łódź <em style="font-weight:400;color:#0e4650;">i cztery miasta obok.</em></h2>
+<p style="color:#3a4749;max-width:30rem;margin:0 0 2.2rem;">Działam w Łodzi i najbliższych miejscowościach. Na bezpłatne oględziny dojeżdżam do Ciebie.</p>
+<ol style="list-style:none;padding:0;margin:0;border-top:1px solid #b9a98f;">
+<li style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #b9a98f;"><span class="disp" style="font-size:1.35rem;font-weight:600;">Łódź</span><span class="mono" style="font-size:0.75rem;color:#4a5557;align-self:center;">i okolice</span></li>
+<li style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #b9a98f;"><span class="disp" style="font-size:1.35rem;font-weight:600;">Pabianice</span><span class="mono" style="font-size:0.75rem;color:#4a5557;align-self:center;">południe</span></li>
+<li style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #b9a98f;"><span class="disp" style="font-size:1.35rem;font-weight:600;">Zgierz</span><span class="mono" style="font-size:0.75rem;color:#4a5557;align-self:center;">północ</span></li>
+<li style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #b9a98f;"><span class="disp" style="font-size:1.35rem;font-weight:600;">Aleksandrów Łódzki</span><span class="mono" style="font-size:0.75rem;color:#4a5557;align-self:center;">zachód</span></li>
+<li style="display:flex;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid #b9a98f;"><span class="disp" style="font-size:1.35rem;font-weight:600;">Konstantynów Łódzki</span><span class="mono" style="font-size:0.75rem;color:#4a5557;align-self:center;">zachód</span></li>
+</ol>
+<p style="margin:1.4rem 0 0;color:#3a4749;">Inna miejscowość w pobliżu? <a href={`tel:${site.phoneHref}`} style="font-weight:600;text-underline-offset:4px;">Zadzwoń i zapytaj.</a></p>
+</div>
+<div style="background:#f3ede3;padding:7px;border:1px solid #cdbfa8;">
+<svg viewBox="0 0 600 500" role="img" aria-label="Schematyczna mapa obszaru działania: Łódź oraz Zgierz, Aleksandrów Łódzki, Konstantynów Łódzki i Pabianice" style="display:block;width:100%;height:auto;">
+<defs>
+<pattern id="bmGrid" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="#f3ede3"></rect><path d="M50 0V50H0" fill="none" stroke="#e0d4c1" stroke-width="2"></path></pattern>
+</defs>
+<rect width="600" height="500" fill="url(#bmGrid)"></rect>
+<g fill="none" stroke-width="5" stroke-linecap="round">
+<path d="M340 270 V150 Q340 115 320 115" stroke="#0e4650"></path>
+<path d="M340 270 H230 Q200 270 200 240 V150 H170" stroke="#0e4650"></path>
+<path d="M340 270 H150 V300" stroke="#0e4650"></path>
+<path d="M340 270 V380 Q340 410 310 410 H280" stroke="#0e4650"></path>
+</g>
+<g fill="none" stroke-width="1.5" stroke="#f3ede3" class="flow">
+<path d="M340 270 V150 Q340 115 320 115"></path>
+<path d="M340 270 H230 Q200 270 200 240 V150 H170"></path>
+<path d="M340 270 H150 V300"></path>
+<path d="M340 270 V380 Q340 410 310 410 H280"></path>
+</g>
+<circle cx="340" cy="270" r="120" fill="none" stroke="#0e4650" stroke-width="1.5" stroke-dasharray="4 8"></circle>
+<rect x="312" y="242" width="56" height="56" fill="#d6c9b4"></rect>
+<rect x="316" y="246" width="22" height="22" fill="#f3ede3"></rect>
+<rect x="342" y="246" width="22" height="22" fill="#a8521f"></rect>
+<rect x="316" y="272" width="22" height="22" fill="#f3ede3"></rect>
+<rect x="342" y="272" width="22" height="22" fill="#f3ede3"></rect>
+<text x="384" y="266" font-family="Fraunces, Georgia, serif" font-size="34" font-weight="700" fill="#17262a">Łódź</text>
+<text x="385" y="290" font-family="JetBrains Mono, monospace" font-size="13" fill="#4a5557">I OKOLICE</text>
+<rect x="306" y="107" width="16" height="16" fill="#a8521f"></rect>
+<text x="300" y="96" text-anchor="end" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="600" fill="#17262a">Zgierz</text>
+<rect x="156" y="142" width="16" height="16" fill="#a8521f"></rect>
+<text x="40" y="130" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="600" fill="#17262a">Aleksandrów Ł.</text>
+<rect x="142" y="296" width="16" height="16" fill="#a8521f"></rect>
+<text x="30" y="345" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="600" fill="#17262a">Konstantynów Ł.</text>
+<rect x="266" y="402" width="16" height="16" fill="#a8521f"></rect>
+<text x="260" y="450" text-anchor="end" font-family="Fraunces, Georgia, serif" font-size="22" font-weight="600" fill="#17262a">Pabianice</text>
+<text x="570" y="480" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="#4a5557">SCHEMAT, NIE W SKALI</text>
+</svg>
+</div>
+</div>
+</section>
+
+<!-- REALIZACJE -->
+<section id="realizacje" style="padding:7rem 0 6rem;">
+<div class="wrap">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:3rem;">
+<div>
+<p class="mono sec-label" style="color:#a8521f;margin:0 0 1.4rem;">05 / Realizacje</p>
+<h2 class="disp" style="font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1;font-weight:600;margin:0;">Tylko moje prace. <em style="font-weight:400;color:#0e4650;">Zero stocków.</em></h2>
+</div>
+<a href="/realizacje" style="font-weight:600;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px;">Wszystkie realizacje</a>
+</div>
+<div class="gallery">
+<figure class="ph g1">
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span class="mono" style="font-size:0.8rem;">[ZDJĘCIE REALIZACJI]</span>
+<figcaption class="mono"><span><span style="color:#a8521f;">Fot. 01</span> Remont łazienki - [DO UZUPEŁNIENIA]</span><span>ŁZ</span></figcaption>
+</figure>
+<figure class="ph g2">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span class="mono" style="font-size:0.74rem;">[ZDJĘCIE REALIZACJI]</span>
+<figcaption class="mono"><span><span style="color:#a8521f;">Fot. 02</span> Instalacja wod-kan</span><span>WK</span></figcaption>
+</figure>
+<figure class="ph g3">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span class="mono" style="font-size:0.74rem;">[ZDJĘCIE REALIZACJI]</span>
+<figcaption class="mono"><span><span style="color:#a8521f;">Fot. 03</span> Glazura</span><span>GT</span></figcaption>
+</figure>
+<figure class="ph g4">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span class="mono" style="font-size:0.74rem;">[ZDJĘCIE REALIZACJI]</span>
+<figcaption class="mono"><span><span style="color:#a8521f;">Fot. 04</span> Instalacja c.o.</span><span>CO</span></figcaption>
+</figure>
+<figure class="ph g5">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
+<span class="mono" style="font-size:0.74rem;">[ZDJĘCIE REALIZACJI]</span>
+<figcaption class="mono"><span><span style="color:#a8521f;">Fot. 05</span> Hydroizolacja i biały montaż</span><span>ŁZ</span></figcaption>
+</figure>
+</div>
+<p class="mono" style="margin:1.2rem 0 0;font-size:0.74rem;color:#4a5557;">Pokazuję wyłącznie własne, autentyczne zdjęcia prac. Galeria - [DO UZUPEŁNIENIA].</p>
+</div>
+</section>
+
+<!-- FAQ -->
+<section aria-labelledby="bm-faq" style="padding:0 0 7rem;">
+<div class="wrap two" style="border-top:1px solid #cdbfa8;padding-top:5rem;">
+<div>
+<p class="mono sec-label" style="color:#a8521f;margin:0 0 1.4rem;">06 / Pytania</p>
+<h2 id="bm-faq" class="disp" style="font-size:clamp(2.4rem,4.2vw,4rem);line-height:1;font-weight:600;margin:0 0 1.6rem;">Zanim zadzwonisz, <em style="font-weight:400;color:#0e4650;">krótko i konkretnie.</em></h2>
+<p style="margin:0 0 2.4rem;color:#3a4749;max-width:26rem;">Nie ma tu Twojego pytania? Zadzwoń pon.-pt. 9:00-17:00: <a href={`tel:${site.phoneHref}`} style="font-weight:600;white-space:nowrap;">{phoneShort}</a>.</p>
+<div style="border:1.5px solid #cdbfa8;padding:1.8rem;background:#ebe2d3;">
+<p class="mono" style="margin:0 0 0.6rem;font-size:0.74rem;color:#8c431a;">Na rynku od 1996</p>
+<p class="disp" style="font-size:1.6rem;margin:0 0 0.6rem;line-height:1.2;font-weight:600;">Ponad {years} lat w instalacjach i remontach.</p>
+<p style="margin:0;color:#4a5557;font-size:0.98rem;">Doświadczenie, którego nie zbuduje się w rok - na co dzień łazienki, instalacje wod-kan i c.o. oraz glazura.</p>
+</div>
+</div>
+<div class="faq" style="border-top:1px solid #cdbfa8;">
+{faqs.map((f, i) => (
+<details open={i === 0}>
+<summary>{f.q}<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
+<p>{f.a}</p>
+</details>
+))}
+</div>
+</div>
+</section>
+
+<!-- FINAL CTA + FORM -->
+<section id="kontakt" class="on-cu" style="background:#a8521f;color:#ffffff;padding:6.5rem 0;position:relative;overflow:hidden;">
+<svg aria-hidden="true" viewBox="0 0 300 300" width="300" height="300" style="position:absolute;left:-60px;bottom:-60px;opacity:0.18;"><g fill="none" stroke="#ffffff" stroke-width="2"><rect x="0" y="0" width="94" height="94"></rect><rect x="100" y="100" width="94" height="94"></rect><rect x="0" y="100" width="94" height="94"></rect><rect x="0" y="200" width="94" height="94"></rect><rect x="100" y="200" width="94" height="94"></rect><rect x="200" y="200" width="94" height="94"></rect></g></svg>
+<div class="wrap two" style="position:relative;align-items:center;">
+<div>
+<p class="mono sec-label" style="color:#fbeee4;margin:0 0 1.6rem;">07 / Kontakt</p>
+<h2 class="disp" style="font-size:clamp(2.2rem,4vw,3.6rem);line-height:1.05;font-weight:500;margin:0 0 1.8rem;max-width:18ch;">Opowiedz, co jest do zrobienia. <em style="font-weight:400;">Przyjadę obejrzeć za darmo.</em></h2>
+<a class="cta-phone disp" href={`tel:${site.phoneHref}`} style="display:inline-block;font-size:clamp(3rem,7vw,6.6rem);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#ffffff;">{phoneShort}</a>
+<div style="display:flex;flex-wrap:wrap;gap:0.6rem 2.4rem;margin-top:1.4rem;">
+<span class="mono" style="font-size:0.8rem;">pon.-pt. 9:00-17:00</span>
+<span class="mono" style="font-size:0.8rem;">Łódź i okolice</span>
+</div>
+</div>
+<div>
+<a href="/kontakt" style="display:block;background:#f3ede3;color:#17262a;padding:2.2rem 2rem;box-shadow:10px 10px 0 #17262a;text-decoration:none;">
+<span class="disp" style="display:block;margin:0 0 0.6rem;font-size:1.6rem;font-weight:600;line-height:1.15;">Wolisz napisać? Oddzwonię.</span>
+<span style="display:block;color:#4a5557;margin-bottom:1.4rem;">Przejdź do formularza - opisz metraż i zakres prac, a oddzwonię w godzinach pracy.</span>
+<span class="btn-ink" style="display:inline-flex;align-items:center;gap:0.7rem;background:#17262a;color:#f3ede3;font-weight:600;padding:1rem 1.4rem;">Formularz kontaktowy
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+</div>
+</div>
+</section>
 </BaseLayout>

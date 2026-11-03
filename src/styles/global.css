@@ -1,23 +1,27 @@
 @import 'tailwindcss';
 
 /* ------------------------------------------------------------------ */
-/*  Tokeny projektu BORS - paleta (petrol + miedź) i typografia.       */
-/*  Dostępne jako klasy Tailwind: bg-petrol, text-copper, font-display */
+/*  Tokeny projektu BORS - paleta „rzemiosło/editorial" i typografia.  */
+/*  Klasy Tailwind: bg-petrol, text-copper, font-display, font-mono... */
 /* ------------------------------------------------------------------ */
 @theme {
-  --color-petrol: #10505c;
-  --color-petrol-dark: #0a3a43;
-  --color-petrol-light: #1b6676;
-  --color-copper: #c26b35;
-  --color-copper-light: #d98a4f;
-  --color-ink: #1c2a2e;
-  --color-muted: #55605c;
-  --color-stone: #f5f3ef;
-  --color-stone-dark: #e9e5dd;
-  --color-line: #e2ddd5;
+  /* Paleta: papier/piasek/fuga + grafit + petrol + miedź */
+  --color-petrol: #0e4650;
+  --color-petrol-dark: #0a363e;
+  --color-petrol-light: #2e6670;
+  --color-copper: #a8521f;
+  --color-copper-light: #e8a27a;
+  --color-copper-dark: #8c431a;
+  --color-ink: #17262a;
+  --color-muted: #4a5557;
+  --color-stone: #f3ede3;      /* papier - tło strony */
+  --color-stone-dark: #e9dfcf; /* piasek - sekcje */
+  --color-line: #cdbfa8;       /* linie / obramowania */
+  --color-grout: #d6c9b4;      /* fuga - tło kafelków/siatki */
 
-  --font-sans: 'Source Sans 3', system-ui, -apple-system, sans-serif;
-  --font-display: 'Archivo', 'Source Sans 3', system-ui, sans-serif;
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   --radius-xl2: 1.25rem;
 }
@@ -28,7 +32,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    background: #ffffff;
+    background: var(--color-stone);
     color: var(--color-ink);
     font-family: var(--font-sans);
     line-height: 1.6;
@@ -36,8 +40,9 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1.1;
+    letter-spacing: -0.02em;
     color: var(--color-ink);
     text-wrap: balance;
   }
@@ -47,6 +52,13 @@
     border-radius: 2px;
   }
   a { color: inherit; }
+}
+
+/* Klasa pomocnicza: etykieta monospace (jak „.mono" w makiecie). */
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 /* Płynne przejścia tylko gdy użytkownik ich nie wyłączył. */

@@ -17,6 +17,10 @@ export const site = {
   nip: '7271157616',
   regon: '471395172',
 
+  // --- Data założenia (potwierdzona: 1 września 1996) ---
+  founded: '1996-09-01',
+  foundedYear: 1996,
+
   // --- Adres (potwierdzony) ---
   address: {
     street: 'ul. Drużynowa 11 lok. 1',
