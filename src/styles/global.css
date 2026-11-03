@@ -71,6 +71,27 @@
   }
 }
 
+/* --- Dynamika: reveal-on-scroll + parallax ---
+   Stan ukryty obowiązuje TYLKO gdy <html> ma klasę .has-reveal (ustawianą
+   skryptem, wyłącznie przy dozwolonym ruchu). Bez JS / przy reduced-motion
+   elementy są normalnie widoczne. */
+.has-reveal [data-reveal],
+.has-reveal [data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.has-reveal [data-reveal].in,
+.has-reveal [data-reveal-stagger] > *.in {
+  opacity: 1;
+  transform: none;
+}
+[data-parallax] { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] { transform: none !important; }
+}
+
 /* Element pomijany wizualnie, dostępny dla czytników / fokusu. */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;

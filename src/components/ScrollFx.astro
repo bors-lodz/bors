@@ -1,0 +1,72 @@
+---
+/**
+ * ScrollFx - subtelna dynamika: reveal-on-scroll + parallax.
+ * Czysty vanilla JS (inline), IntersectionObserver + rAF. Respektuje reduced-motion.
+ * Elementy oznaczane atrybutami: data-reveal, data-reveal-stagger, data-parallax="0.1".
+ */
+---
+<script is:inline>
+  (function () {
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (reduce) return;
+
+    function start() {
+      // --- Reveal on scroll ---
+      var groups = document.querySelectorAll('[data-reveal-stagger]');
+      Array.prototype.forEach.call(groups, function (g) {
+        Array.prototype.forEach.call(g.children, function (ch, i) {
+          ch.style.transitionDelay = Math.min(i * 70, 420) + 'ms';
+        });
+      });
+
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            var t = en.target;
+            if (t.hasAttribute('data-reveal-stagger')) {
+              Array.prototype.forEach.call(t.children, function (ch) { ch.classList.add('in'); });
+            } else {
+              t.classList.add('in');
+            }
+            io.unobserve(t);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('[data-reveal], [data-reveal-stagger]').forEach(function (el) { io.observe(el); });
+      } else {
+        // brak IO - pokaż wszystko
+        document.documentElement.classList.remove('has-reveal');
+      }
+
+      // --- Parallax (tylko szersze ekrany) ---
+      var items = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+      if (items.length && window.innerWidth > 820) {
+        var ticking = false;
+        var update = function () {
+          var vh = window.innerHeight || 800;
+          items.forEach(function (el) {
+            var speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+            var r = el.getBoundingClientRect();
+            var center = r.top + r.height / 2;
+            var offset = (center - vh / 2) * speed * -1;
+            el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+          });
+          ticking = false;
+        };
+        var onScroll = function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        update();
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
+  })();
+</script>

@@ -17,6 +17,7 @@ import { site, hasPhone } from '../config/site';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SiteGate from '../components/SiteGate.astro';
+import ScrollFx from '../components/ScrollFx.astro';
 
 interface Props {
   title: string;
@@ -77,6 +78,10 @@ const allJsonLd = [localBusiness, ...jsonLd];
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#0e4650" />
+    <script is:inline>
+      /* ustaw stan ukryty dla reveal przed renderem (tylko gdy ruch dozwolony) */
+      try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('has-reveal'); } catch (e) {}
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -102,5 +107,6 @@ const allJsonLd = [localBusiness, ...jsonLd];
       </main>
       <Footer />
     </div>
+    <ScrollFx />
   </body>
 </html>

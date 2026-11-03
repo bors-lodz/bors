@@ -52,7 +52,7 @@ const faqs = [
 </div>
 
 <!-- Tile wall with opened installation -->
-<div class="wall">
+<div class="wall" data-parallax="0.05">
 <div style="background:#d6c9b4;padding:7px;border:1px solid #9c8c74;">
 <svg viewBox="0 0 600 600" role="img" aria-label="Ilustracja: ściana z płytkami, w odkrytym fragmencie widać instalację - pion wody zimnej i ciepłej, zawory odcinające oraz odpływ" style="display:block;width:100%;height:auto;">
 <defs>
@@ -127,7 +127,7 @@ const faqs = [
 <!-- FACT STRIP -->
 <section aria-label="Najważniejsze informacje" style="padding:0 0 1rem;">
 <div class="wrap">
-<div class="facts">
+<div class="facts" data-reveal-stagger>
 <div style="background:#f3ede3;padding:1.6rem 1.8rem;">
 <div class="disp" style="font-size:3rem;font-weight:600;line-height:1;">od 1996</div>
 <div style="margin-top:0.5rem;color:#3a4749;">ponad {years} lat w instalacjach i remontach</div>
@@ -162,7 +162,7 @@ const faqs = [
 <div class="svc-head mono" aria-hidden="true" style="display:grid;grid-template-columns:5.5rem 1.35fr 1.2fr 3.5rem;gap:2rem;padding:0 1.5rem 0.8rem;font-size:0.72rem;color:#4a5557;">
 <span>Poz.</span><span>Usługa</span><span>Zakres prac</span><span></span>
 </div>
-<div style="border-bottom:1px solid #cdbfa8;">
+<div style="border-bottom:1px solid #cdbfa8;" data-reveal-stagger>
 <a class="svc" href="/uslugi/remonty-lazienek">
 <span style="display:flex;flex-direction:column;gap:0.3rem;"><span class="disp svc-num" style="font-size:2.6rem;font-weight:300;color:#a8521f;line-height:1;">01</span><span class="mono svc-code" style="font-size:0.72rem;color:#4a5557;">ŁZ</span></span>
 <span><span class="disp" style="display:block;font-size:clamp(1.6rem,2.6vw,2.35rem);font-weight:600;line-height:1.1;">Kompleksowe remonty łazienek</span><span class="mono" style="display:inline-block;margin-top:0.7rem;font-size:0.72rem;background:#17262a;color:#f3ede3;padding:0.25rem 0.55rem;">Kompleksowo</span></span>
@@ -190,7 +190,7 @@ const faqs = [
 </div>
 
 <!-- not sure band -->
-<div style="margin-top:3rem;background:#17262a;color:#f3ede3;padding:2rem 2.2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
+<div style="margin-top:3rem;background:#17262a;color:#f3ede3;padding:2rem 2.2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;" data-reveal>
 <div style="max-width:40rem;">
 <p class="disp" style="margin:0;font-size:clamp(1.5rem,2.4vw,2rem);font-weight:600;line-height:1.15;">Nie wiesz, od czego zacząć?</p>
 <p style="margin:0.4rem 0 0;color:#c2c9c7;">Opisz problem przez telefon - przyjadę obejrzeć za darmo i powiem, co trzeba zrobić.</p>
@@ -205,7 +205,7 @@ Zadzwoń: {phoneShort}
 
 <!-- CALCULATOR -->
 <section id="kalkulator" style="background:#0e4650;color:#f3ede3;padding:7rem 0;position:relative;overflow:hidden;">
-<svg aria-hidden="true" width="420" height="420" viewBox="0 0 420 420" style="position:absolute;right:-90px;top:-90px;opacity:0.12;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="318" y="0" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="318" y="106" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect><rect x="318" y="212" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g></svg>
+<svg aria-hidden="true" data-parallax="0.14" width="420" height="420" viewBox="0 0 420 420" style="position:absolute;right:-90px;top:-90px;opacity:0.12;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="318" y="0" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="318" y="106" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect><rect x="318" y="212" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g></svg>
 <div class="wrap calc-grid" style="position:relative;">
 <div>
 <p class="mono sec-label" style="color:#e8a27a;margin:0 0 1.4rem;">02 / Kalkulator online</p>
@@ -288,7 +288,7 @@ Zadzwoń: {phoneShort}
 </div>
 <p style="margin:0;color:#3a4749;max-width:28rem;">Zanim cokolwiek zaczniemy, wiesz co, za ile i kiedy. Oględziny i wycena nic nie kosztują.</p>
 </div>
-<ol class="steps" style="list-style:none;margin:0;">
+<ol class="steps" style="list-style:none;margin:0;" data-reveal-stagger>
 <li class="step" style="background:#f3ede3;padding:2rem 1.8rem 2.2rem;min-height:18rem;display:flex;flex-direction:column;justify-content:space-between;">
 <span class="disp" style="font-size:5.5rem;font-weight:300;line-height:0.8;color:#a8521f;">1</span>
 <div><h3 class="disp" style="font-size:1.7rem;font-weight:600;margin:1.5rem 0 0.6rem;">Kontakt</h3>
@@ -383,7 +383,7 @@ Zadzwoń: {phoneShort}
 </div>
 <a href="/realizacje" style="font-weight:600;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px;">Wszystkie realizacje</a>
 </div>
-<div class="gallery">
+<div class="gallery" data-reveal-stagger>
 <figure class="ph g1">
 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>
 <span class="mono" style="font-size:0.8rem;">[ZDJĘCIE REALIZACJI]</span>
@@ -421,13 +421,13 @@ Zadzwoń: {phoneShort}
 <p class="mono sec-label" style="color:#a8521f;margin:0 0 1.4rem;">06 / Pytania</p>
 <h2 id="bm-faq" class="disp" style="font-size:clamp(2.4rem,4.2vw,4rem);line-height:1;font-weight:600;margin:0 0 1.6rem;">Zanim zadzwonisz, <em style="font-weight:400;color:#0e4650;">krótko i konkretnie.</em></h2>
 <p style="margin:0 0 2.4rem;color:#3a4749;max-width:26rem;">Nie ma tu Twojego pytania? Zadzwoń pon.-pt. 9:00-17:00: <a href={`tel:${site.phoneHref}`} style="font-weight:600;white-space:nowrap;">{phoneShort}</a>.</p>
-<div style="border:1.5px solid #cdbfa8;padding:1.8rem;background:#ebe2d3;">
+<div style="border:1.5px solid #cdbfa8;padding:1.8rem;background:#ebe2d3;" data-reveal>
 <p class="mono" style="margin:0 0 0.6rem;font-size:0.74rem;color:#8c431a;">Na rynku od 1996</p>
 <p class="disp" style="font-size:1.6rem;margin:0 0 0.6rem;line-height:1.2;font-weight:600;">Ponad {years} lat w instalacjach i remontach.</p>
 <p style="margin:0;color:#4a5557;font-size:0.98rem;">Doświadczenie, którego nie zbuduje się w rok - na co dzień łazienki, instalacje wod-kan i c.o. oraz glazura.</p>
 </div>
 </div>
-<div class="faq" style="border-top:1px solid #cdbfa8;">
+<div class="faq" style="border-top:1px solid #cdbfa8;" data-reveal-stagger>
 {faqs.map((f, i) => (
 <details open={i === 0}>
 <summary>{f.q}<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
@@ -440,7 +440,7 @@ Zadzwoń: {phoneShort}
 
 <!-- FINAL CTA + FORM -->
 <section id="kontakt" class="on-cu" style="background:#a8521f;color:#ffffff;padding:6.5rem 0;position:relative;overflow:hidden;">
-<svg aria-hidden="true" viewBox="0 0 300 300" width="300" height="300" style="position:absolute;left:-60px;bottom:-60px;opacity:0.18;"><g fill="none" stroke="#ffffff" stroke-width="2"><rect x="0" y="0" width="94" height="94"></rect><rect x="100" y="100" width="94" height="94"></rect><rect x="0" y="100" width="94" height="94"></rect><rect x="0" y="200" width="94" height="94"></rect><rect x="100" y="200" width="94" height="94"></rect><rect x="200" y="200" width="94" height="94"></rect></g></svg>
+<svg aria-hidden="true" data-parallax="0.1" viewBox="0 0 300 300" width="300" height="300" style="position:absolute;left:-60px;bottom:-60px;opacity:0.18;"><g fill="none" stroke="#ffffff" stroke-width="2"><rect x="0" y="0" width="94" height="94"></rect><rect x="100" y="100" width="94" height="94"></rect><rect x="0" y="100" width="94" height="94"></rect><rect x="0" y="200" width="94" height="94"></rect><rect x="100" y="200" width="94" height="94"></rect><rect x="200" y="200" width="94" height="94"></rect></g></svg>
 <div class="wrap two" style="position:relative;align-items:center;">
 <div>
 <p class="mono sec-label" style="color:#fbeee4;margin:0 0 1.6rem;">07 / Kontakt</p>
@@ -452,7 +452,7 @@ Zadzwoń: {phoneShort}
 </div>
 </div>
 <div>
-<a href="/kontakt" style="display:block;background:#f3ede3;color:#17262a;padding:2.2rem 2rem;box-shadow:10px 10px 0 #17262a;text-decoration:none;">
+<a href="/kontakt" style="display:block;background:#f3ede3;color:#17262a;padding:2.2rem 2rem;box-shadow:10px 10px 0 #17262a;text-decoration:none;" data-reveal>
 <span class="disp" style="display:block;margin:0 0 0.6rem;font-size:1.6rem;font-weight:600;line-height:1.15;">Wolisz napisać? Oddzwonię.</span>
 <span style="display:block;color:#4a5557;margin-bottom:1.4rem;">Przejdź do formularza - opisz metraż i zakres prac, a oddzwonię w godzinach pracy.</span>
 <span class="btn-ink" style="display:inline-flex;align-items:center;gap:0.7rem;background:#17262a;color:#f3ede3;font-weight:600;padding:1rem 1.4rem;">Formularz kontaktowy
