@@ -2,8 +2,9 @@
  * CENNIK BORS - jedno źródło prawdy dla kalkulatora.
  * Wszystkie stawki NETTO, Łódź 2026. Zmieniasz TU, bez dotykania logiki (src/lib/estimate.ts).
  *
+ * Stawki ustawione na poziomie RYNKOWYM 2026 (research cenników: kb.pl, muratordom.pl,
+ * cenauslug.pl, serwisy hydroizolacji/odpływów) - do ostatecznego potwierdzenia z klientem.
  * Każda pozycja z komentarzem // DO WERYFIKACJI Z KLIENTEM.
- * Potwierdzona przez klienta: tylko stawka za punkt wod-kan (1000 zł).
  */
 
 export type TileFormat = 'standard' | 'duzy' | 'mozaika';
@@ -12,36 +13,36 @@ export type MaterialStandard = 'podstawowy' | 'sredni' | 'wysoki';
 export const pricing = {
   /** Stawki robocizny za jednostkę (zł netto). */
   labor: {
-    wodKanPoint: 1000, // zł/punkt - POTWIERDZONE PRZEZ KLIENTA
-    coNewPoint: 1000, // zł/punkt // DO WERYFIKACJI Z KLIENTEM
-    radiator: 600, // zł/szt. (wymiana/montaż grzejnika) // DO WERYFIKACJI Z KLIENTEM
-    tileDemolition: 40, // zł/m² (demontaż starych płytek) // DO WERYFIKACJI Z KLIENTEM
-    rubbleRemoval: 600, // zł ryczałt (wywóz gruzu) // DO WERYFIKACJI Z KLIENTEM
-    wallPrep: 50, // zł/m² (wyrównanie/przygotowanie ścian) // DO WERYFIKACJI Z KLIENTEM
-    waterproofing: 50, // zł/m² (hydroizolacja podłogi) // DO WERYFIKACJI Z KLIENTEM
+    wodKanPoint: 800, // zł/punkt (rynek ~770 zł śr.) // DO WERYFIKACJI Z KLIENTEM
+    coNewPoint: 500, // zł/punkt c.o. (rynek ~240-260 zł) // DO WERYFIKACJI Z KLIENTEM
+    radiator: 450, // zł/szt. montaż/wymiana grzejnika (rynek 300-450) // DO WERYFIKACJI Z KLIENTEM
+    tileDemolition: 70, // zł/m² demontaż płytek (rynek 55-100) // DO WERYFIKACJI Z KLIENTEM
+    rubbleRemoval: 600, // zł ryczałt wywóz gruzu // DO WERYFIKACJI Z KLIENTEM
+    wallPrep: 55, // zł/m² przygotowanie/wyrównanie ścian (rynek 40-60) // DO WERYFIKACJI Z KLIENTEM
+    waterproofing: 80, // zł/m² hydroizolacja (rynek 45-120) // DO WERYFIKACJI Z KLIENTEM
   },
 
-  /** Układanie płytek wg formatu (zł/m²). */
+  /** Układanie płytek wg formatu (zł/m² robocizny). */
   tiling: {
-    standard: 150, // do 60x60 // DO WERYFIKACJI Z KLIENTEM
-    duzy: 220, // > 60x60 // DO WERYFIKACJI Z KLIENTEM
-    mozaika: 250, // mozaika // DO WERYFIKACJI Z KLIENTEM
+    standard: 160, // do 60x60 (rynek 110-200) // DO WERYFIKACJI Z KLIENTEM
+    duzy: 220, // > 60x60 (niewidoczne w kalkulatorze - zostawione w modelu) // DO WERYFIKACJI Z KLIENTEM
+    mozaika: 280, // mozaika (rynek 240-400) // DO WERYFIKACJI Z KLIENTEM
   } satisfies Record<TileFormat, number>,
 
-  /** Dodatki o stałej cenie (zł/szt.). */
+  /** Dodatki o stałej cenie (zł/szt. robocizny). */
   addonsFixed: {
-    stelazWc: 700, // stelaż WC podwieszany + miska // DO WERYFIKACJI Z KLIENTEM
-    odplywLiniowy: 900, // odpływ liniowy // DO WERYFIKACJI Z KLIENTEM
-    kabinaBrodzik: 600, // kabina / brodzik // DO WERYFIKACJI Z KLIENTEM
-    wannaZabudowa: 900, // wanna z zabudową // DO WERYFIKACJI Z KLIENTEM
+    stelazWc: 550, // stelaż WC podwieszany + miska (rynek 330-650) // DO WERYFIKACJI Z KLIENTEM
+    odplywLiniowy: 700, // odpływ liniowy (rynek 500-1200) // DO WERYFIKACJI Z KLIENTEM
+    kabinaBrodzik: 600, // kabina / brodzik (rynek 470-600) // DO WERYFIKACJI Z KLIENTEM
+    wannaZabudowa: 750, // wanna z zabudową (rynek 600-800) // DO WERYFIKACJI Z KLIENTEM
     umywalkaSzafka: 450, // umywalka z szafką i baterią // DO WERYFIKACJI Z KLIENTEM
     grzejnikLazienkowy: 450, // grzejnik łazienkowy (drabinkowy) // DO WERYFIKACJI Z KLIENTEM
   },
 
   /** Dodatki liczone za m² (odnoszone do powierzchni podłogi). */
   addonsPerM2: {
-    sufitGk: 150, // sufit podwieszany GK // DO WERYFIKACJI Z KLIENTEM
-    ogrzewaniePodlogowe: 180, // ogrzewanie podłogowe wodne // DO WERYFIKACJI Z KLIENTEM
+    sufitGk: 150, // sufit podwieszany GK (niewidoczne w kalkulatorze - w modelu) // DO WERYFIKACJI Z KLIENTEM
+    ogrzewaniePodlogowe: 120, // ogrzewanie podłogowe wodne (rynek 80-150) // DO WERYFIKACJI Z KLIENTEM
   },
 
   /** Materiały (płytki + chemia budowlana) za m² powierzchni płytek. */

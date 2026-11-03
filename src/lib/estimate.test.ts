@@ -42,17 +42,17 @@ describe('estimate()', () => {
       scope: 'robocizna_materialy',
       materialStandard: 'sredni',
     });
-    expect(r.laborNet).toBe(11120);
+    expect(r.laborNet).toBe(11080);
     expect(r.materialsNet).toBe(3960);
-    expect(r.net).toBe(15080);
+    expect(r.net).toBe(15040);
     expect(r.vatRate).toBe(8);
-    expect(r.vatAmount).toBe(1206);
-    expect(r.gross).toBe(16286);
-    expect(r.low).toBe(13843);
-    expect(r.high).toBe(18729);
+    expect(r.vatAmount).toBe(1203);
+    expect(r.gross).toBe(16243);
+    expect(r.low).toBe(13807);
+    expect(r.high).toBe(18679);
     expect(r.days).toBe(8);
     // hydroizolacja obecna tylko dla łazienki
-    expect(r.items.some((i) => i.label === 'Hydroizolacja' && i.total === 200)).toBe(true);
+    expect(r.items.some((i) => i.label === 'Hydroizolacja' && i.total === 320)).toBe(true);
     expect(r.materials?.total).toBe(3960);
   });
 
@@ -70,15 +70,15 @@ describe('estimate()', () => {
       scope: 'robocizna_materialy',
       materialStandard: 'wysoki',
     });
-    expect(r.laborNet).toBe(18920);
+    expect(r.laborNet).toBe(18740);
     expect(r.materialsNet).toBe(12800);
-    expect(r.net).toBe(31720);
-    expect(r.vatAmount).toBe(2538);
-    expect(r.gross).toBe(34258);
-    expect(r.low).toBe(29119);
-    expect(r.high).toBe(39397);
+    expect(r.net).toBe(31540);
+    expect(r.vatAmount).toBe(2523);
+    expect(r.gross).toBe(34063);
+    expect(r.low).toBe(28954);
+    expect(r.high).toBe(39172);
     expect(r.days).toBe(13);
-    expect(r.items.some((i) => i.label === 'Odpływ liniowy' && i.total === 900)).toBe(true);
+    expect(r.items.some((i) => i.label === 'Odpływ liniowy' && i.total === 700)).toBe(true);
     expect(r.items.some((i) => i.label === 'Układanie płytek (duży format)')).toBe(true);
   });
 
@@ -90,22 +90,22 @@ describe('estimate()', () => {
       scope: 'robocizna',
     });
     expect(r.items).toHaveLength(1);
-    expect(r.laborNet).toBe(1800);
+    expect(r.laborNet).toBe(1350);
     expect(r.materialsNet).toBe(0);
     expect(r.materials).toBeNull();
-    expect(r.net).toBe(1800);
-    expect(r.vatAmount).toBe(144);
-    expect(r.gross).toBe(1944);
-    expect(r.low).toBe(1652);
-    expect(r.high).toBe(2236);
+    expect(r.net).toBe(1350);
+    expect(r.vatAmount).toBe(108);
+    expect(r.gross).toBe(1458);
+    expect(r.low).toBe(1239);
+    expect(r.high).toBe(1677);
     expect(r.days).toBe(2); // minimum 2 dni
   });
 
   it('stawka VAT 23% jest respektowana', () => {
     const r = estimate({ ...base, works: ['co'], coRadiators: 1, vat: 23 });
     expect(r.vatRate).toBe(23);
-    expect(r.vatAmount).toBe(138); // 600 * 23%
-    expect(r.gross).toBe(738);
+    expect(r.vatAmount).toBe(104); // 450 * 23%
+    expect(r.gross).toBe(554);
   });
 
   it('pusty input daje zerowy wynik i 0 dni', () => {
