@@ -18,8 +18,16 @@ export type Realizacja = {
 };
 
 export const realizacje: Realizacja[] = [
-  // Przykład (odkomentuj i podmień po dodaniu pliku do public/realizacje/):
-  // { src: '/realizacje/lazienka-polesie-1.jpg', alt: 'Remont łazienki na Polesiu - glazura wielkoformatowa', category: 'Łazienki' },
+  {
+    src: '/realizacje/schody-zewnetrzne-gres-drewnopodobny.jpg',
+    alt: 'Schody zewnętrzne wyłożone gresem drewnopodobnym - realizacja BORS, Łódź',
+    category: 'Glazura',
+  },
+  {
+    src: '/realizacje/balkon-gres-drewnopodobny.jpg',
+    alt: 'Balkon wyłożony gresem drewnopodobnym - realizacja BORS, Łódź',
+    category: 'Glazura',
+  },
 ];
 
 export const kategorieRealizacji = [...new Set(realizacje.map((r) => r.category))];
