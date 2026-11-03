@@ -61,6 +61,21 @@
         window.addEventListener('resize', onScroll, { passive: true });
         update();
       }
+
+      // --- Płytki w hero: kilka dosypuje się przy pierwszym scrollu ---
+      var heroTiles = document.getElementById('hero-tiles');
+      if (heroTiles) {
+        var fell = false;
+        var drop = function () {
+          if (fell) return;
+          if (window.pageYOffset > 60) {
+            fell = true;
+            heroTiles.classList.add('fell');
+            window.removeEventListener('scroll', drop);
+          }
+        };
+        window.addEventListener('scroll', drop, { passive: true });
+      }
     }
 
     if (document.readyState === 'loading') {

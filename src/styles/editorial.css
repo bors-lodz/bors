@@ -33,6 +33,21 @@
 .bm .svc:hover .svc-arrow{background:#a8521f;border-color:#a8521f;color:#ffffff;transform:rotate(-45deg)}
 .bm .svc-arrow{transition:transform .25s ease,background .25s ease}
 .bm .calc-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:4.5rem;align-items:start}
+/* Mini-kalkulator: chipy, pola, suwak (custom) */
+.bm .chip-in{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.bm .chip{display:inline-flex;align-items:center;padding:0.5rem 0.85rem;border:1.5px solid #17262a;background:#ffffff;font-weight:600;font-size:0.92rem;cursor:pointer;transition:background .15s ease,color .15s ease}
+.bm .chip:hover{background:#ebe2d3}
+.bm .chip-in:checked+.chip{background:#17262a;color:#f3ede3}
+.bm .chip-in:focus-visible+.chip{outline:3px solid #a8521f;outline-offset:2px}
+.bm .inp{width:100%;font:inherit;font-size:1rem;padding:0.75rem 0.9rem;border:1.5px solid #17262a;border-radius:0;background:#ffffff;color:#17262a}
+.bm .range{-webkit-appearance:none;appearance:none;width:100%;height:8px;margin:0.6rem 0;background:#d6c9b4;border:1.5px solid #17262a;cursor:pointer}
+.bm .range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;background:#a8521f;border:1.5px solid #17262a;cursor:pointer}
+.bm .range::-moz-range-thumb{width:22px;height:22px;background:#a8521f;border:1.5px solid #17262a;border-radius:0;cursor:pointer}
+.bm .range::-moz-range-track{height:8px;background:#d6c9b4}
+.bm .range:focus-visible{outline:3px solid #a8521f;outline-offset:3px}
+/* Płytki spadające (hero) - stan początkowy + wyzwalanie przy scrollu */
+.has-reveal .bm .tile-scroll{transform:translateY(-55px) rotate(-7deg);opacity:0;transform-box:fill-box;transform-origin:center;transition:transform .75s cubic-bezier(.2,.9,.25,1.2),opacity .5s ease}
+.has-reveal .bm #hero-tiles.fell .tile-scroll{transform:none;opacity:1}
 .bm .area-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center}
 .bm .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;background:#d6c9b4;padding:7px}
 .bm .step:nth-child(2){margin-top:3rem}

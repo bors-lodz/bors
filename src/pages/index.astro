@@ -54,7 +54,7 @@ const faqs = [
 <!-- Tile wall with opened installation -->
 <div class="wall" data-parallax="0.05">
 <div style="background:#d6c9b4;padding:7px;border:1px solid #9c8c74;">
-<svg viewBox="0 0 600 600" role="img" aria-label="Ilustracja: ściana z płytkami, w odkrytym fragmencie widać instalację - pion wody zimnej i ciepłej, zawory odcinające oraz odpływ" style="display:block;width:100%;height:auto;">
+<svg id="hero-tiles" viewBox="0 0 600 600" role="img" aria-label="Ilustracja: ściana z płytkami, w odkrytym fragmencie widać instalację - pion wody zimnej i ciepłej, zawory odcinające oraz odpływ" style="display:block;width:100%;height:auto;">
 <defs>
 <pattern id="bmTile" width="75" height="75" patternUnits="userSpaceOnUse"><rect width="75" height="75" fill="#d6c9b4"></rect><rect x="2.5" y="2.5" width="70" height="70" fill="#f3ede3"></rect></pattern>
 <pattern id="bmHatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#e6dccb"></rect><line x1="0" y1="0" x2="0" y2="12" stroke="#d6c9b4" stroke-width="2"></line></pattern>
@@ -65,6 +65,11 @@ const faqs = [
 <rect x="527.5" y="227.5" width="70" height="70" fill="#e3d6c2"></rect>
 <rect x="527.5" y="452.5" width="70" height="70" fill="#0e4650"></rect>
 <rect class="tile-drop" x="452.5" y="2.5" width="70" height="70" fill="#a8521f"></rect>
+<rect class="tile-drop" x="227.5" y="2.5" width="70" height="70" fill="#0e4650" style="animation-delay:.5s"></rect>
+<rect class="tile-scroll" x="527.5" y="2.5" width="70" height="70" fill="#a8521f" style="transition-delay:0ms"></rect>
+<rect class="tile-scroll" x="527.5" y="77.5" width="70" height="70" fill="#0e4650" style="transition-delay:.1s"></rect>
+<rect class="tile-scroll" x="2.5" y="152.5" width="70" height="70" fill="#a8521f" style="transition-delay:.2s"></rect>
+<rect class="tile-scroll" x="452.5" y="527.5" width="70" height="70" fill="#0e4650" style="transition-delay:.3s"></rect>
 <rect x="75" y="150" width="300" height="375" fill="url(#bmHatch)"></rect>
 <rect x="75" y="150" width="300" height="375" fill="none" stroke="#9c8c74" stroke-width="1.5"></rect>
 <path d="M120 525 V215 Q120 195 140 195 H300" fill="none" stroke="#0e4650" stroke-width="8" stroke-linecap="round"></path>
@@ -205,7 +210,8 @@ Zadzwoń: {phoneShort}
 
 <!-- CALCULATOR -->
 <section id="kalkulator" style="background:#0e4650;color:#f3ede3;padding:7rem 0;position:relative;overflow:hidden;">
-<svg aria-hidden="true" data-parallax="0.14" width="420" height="420" viewBox="0 0 420 420" style="position:absolute;right:-90px;top:-90px;opacity:0.12;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="318" y="0" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="318" y="106" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect><rect x="318" y="212" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g></svg>
+<svg aria-hidden="true" data-parallax="0.14" width="460" height="460" viewBox="0 0 420 420" style="position:absolute;right:-90px;top:-90px;opacity:0.16;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="318" y="0" width="100" height="100"></rect><rect x="0" y="106" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="318" y="106" width="100" height="100"></rect><rect x="0" y="212" width="100" height="100"></rect><rect x="106" y="212" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect><rect x="318" y="212" width="100" height="100"></rect><rect x="0" y="318" width="100" height="100"></rect><rect x="106" y="318" width="100" height="100"></rect><rect x="212" y="318" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g><g fill="#f3ede3" opacity="0.55"><rect x="318" y="0" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="106" y="212" width="100" height="100"></rect><rect x="318" y="318" width="100" height="100"></rect></g></svg>
+<svg aria-hidden="true" data-parallax="0.09" width="340" height="340" viewBox="0 0 320 320" style="position:absolute;left:-70px;bottom:-70px;opacity:0.1;"><g fill="none" stroke="#f3ede3" stroke-width="2"><rect x="0" y="0" width="100" height="100"></rect><rect x="106" y="0" width="100" height="100"></rect><rect x="212" y="0" width="100" height="100"></rect><rect x="0" y="106" width="100" height="100"></rect><rect x="106" y="106" width="100" height="100"></rect><rect x="212" y="106" width="100" height="100"></rect><rect x="0" y="212" width="100" height="100"></rect><rect x="106" y="212" width="100" height="100"></rect><rect x="212" y="212" width="100" height="100"></rect></g><g fill="#e8a27a" opacity="0.7"><rect x="106" y="106" width="100" height="100"></rect></g></svg>
 <div class="wrap calc-grid" style="position:relative;">
 <div>
 <p class="mono sec-label" style="color:#e8a27a;margin:0 0 1.4rem;">02 / Kalkulator online</p>
@@ -240,7 +246,7 @@ Zadzwoń: {phoneShort}
 </fieldset>
 <div class="form-2" style="display:grid;grid-template-columns:1.4fr 1fr;gap:1.2rem;align-items:end;margin-bottom:1.6rem;">
 <div>
-<label for="bm-m2" class="mono" style="display:flex;justify-content:space-between;font-size:0.74rem;color:#4a5557;margin-bottom:0.6rem;"><span>Metraż łazienki</span><span style="color:#17262a;font-weight:700;">5 m²</span></label>
+<label for="bm-m2" class="mono" style="display:flex;justify-content:space-between;font-size:0.74rem;color:#4a5557;margin-bottom:0.6rem;"><span>Metraż łazienki</span><span id="bm-m2-out" style="color:#17262a;font-weight:700;">5 m²</span></label>
 <input class="range" id="bm-m2" name="metraz" type="range" min="2" max="14" value="5" />
 </div>
 <div>
@@ -250,8 +256,8 @@ Zadzwoń: {phoneShort}
 </div>
 <div style="display:grid;">
 <div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-top:1px dashed #9c8c74;border-bottom:1px dashed #9c8c74;">
-<span>Punkty wod-kan × 4<span class="mono" style="display:block;font-size:0.7rem;color:#0e4650;">stawka orientacyjna: od 800 zł / pkt</span></span>
-<strong style="white-space:nowrap;">od 3 200 zł</strong>
+<span>Punkty wod-kan × <span id="bm-pkt-out">4</span><span class="mono" style="display:block;font-size:0.7rem;color:#0e4650;">stawka orientacyjna: od 800 zł / pkt</span></span>
+<strong id="bm-sum" style="white-space:nowrap;">od 3 200 zł</strong>
 </div>
 <div style="display:flex;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-bottom:1px dashed #9c8c74;">
 <span>Demontaż i przygotowanie</span>
@@ -461,4 +467,24 @@ Zadzwoń: {phoneShort}
 </div>
 </div>
 </section>
+
+<script is:inline>
+  (function () {
+    var m2 = document.getElementById('bm-m2');
+    var m2o = document.getElementById('bm-m2-out');
+    var pkt = document.getElementById('bm-pkt');
+    var pkto = document.getElementById('bm-pkt-out');
+    var sum = document.getElementById('bm-sum');
+    var RATE = 800;
+    var fmt = function (n) { try { return n.toLocaleString('pl-PL'); } catch (e) { return String(n); } };
+    if (m2 && m2o) m2.addEventListener('input', function () { m2o.textContent = m2.value + ' m²'; });
+    function updSum() {
+      var n = parseInt(pkt && pkt.value, 10);
+      if (!n || n < 1) n = 1;
+      if (pkto) pkto.textContent = String(n);
+      if (sum) sum.textContent = 'od ' + fmt(n * RATE) + ' zł';
+    }
+    if (pkt) { pkt.addEventListener('input', updSum); pkt.addEventListener('change', updSum); }
+  })();
+</script>
 </BaseLayout>
