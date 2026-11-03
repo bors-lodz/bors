@@ -52,7 +52,7 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
         {works.map((w) => (
           <label class="opt flex cursor-pointer items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold transition-all hover:border-copper/50 has-[:checked]:border-copper has-[:checked]:bg-copper/5">
             <input type="checkbox" name="work" value={w.id} class="h-5 w-5 accent-[color:var(--color-copper)]" />
-            <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-stone text-petrol"><Icon name={w.icon} size={20} /></span>
+            <span class="ic inline-flex h-9 w-9 items-center justify-center bg-stone text-petrol"><Icon name={w.icon} size={20} /></span>
             {w.label}
           </label>
         ))}
@@ -74,13 +74,13 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
           <label for="wallTileArea" class="block text-sm font-semibold">Powierzchnia ścian do płytek (m²)</label>
           <input id="wallTileArea" name="wallTileArea" type="number" inputmode="decimal" min="0" step="0.5" class="field" placeholder="np. 18" />
           <button type="button" id="wall-help-toggle" class="mt-1.5 text-sm font-semibold text-copper hover:underline">Nie wiesz? Policzymy »</button>
-          <div id="wall-help" class="mt-2 hidden rounded-xl border border-line bg-stone p-3">
+          <div id="wall-help" class="mt-2 hidden border border-line bg-stone-dark p-3">
             <p class="text-xs text-muted">Podaj obwód pomieszczenia i wysokość płytek - policzymy pole ścian.</p>
             <div class="mt-2 grid grid-cols-2 gap-2">
               <input id="perimeter" type="number" inputmode="decimal" min="0" step="0.1" class="field" placeholder="obwód (m)" />
               <input id="tileHeight" type="number" inputmode="decimal" min="0" step="0.1" class="field" placeholder="wysokość (m)" />
             </div>
-            <button type="button" id="wall-calc" class="mt-2 rounded-lg bg-petrol px-3 py-1.5 text-sm font-bold text-white">Przelicz na m²</button>
+            <button type="button" id="wall-calc" class="mt-2 bg-petrol px-3 py-1.5 text-sm font-bold text-white">Przelicz na m²</button>
           </div>
         </div>
       </div>
@@ -191,10 +191,10 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
 
     <!-- nawigacja -->
     <div class="mt-8 flex items-center justify-between gap-3 border-t border-line pt-5">
-      <button type="button" id="btn-back" class="inline-flex items-center gap-2 rounded-xl border-2 border-line px-5 py-3 font-bold text-ink transition-colors hover:border-copper disabled:cursor-not-allowed disabled:opacity-40" disabled>
+      <button type="button" id="btn-back" class="inline-flex items-center gap-2 border-[1.5px] border-ink px-5 py-3 font-bold text-ink transition-colors hover:bg-stone-dark disabled:cursor-not-allowed disabled:opacity-40" disabled>
         <Icon name="arrow" size={18} class="rotate-180" /> Wstecz
       </button>
-      <button type="button" id="btn-next" class="inline-flex items-center gap-2 rounded-xl bg-copper px-6 py-3 font-bold text-white transition-colors hover:bg-copper-light">
+      <button type="button" id="btn-next" class="inline-flex items-center gap-2 bg-copper px-6 py-3 font-bold text-white transition-colors hover:bg-copper-dark">
         Dalej <Icon name="arrow" size={18} />
       </button>
     </div>
@@ -202,8 +202,32 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
 </div>
 
 <style>
-  .field { width: 100%; margin-top: .35rem; border-radius: .6rem; border: 1px solid var(--color-line); padding: .6rem .75rem; font-size: 1rem; }
+  /* Pola tekstowe/liczbowe - styl editorial (ostre krawędzie, grafitowa ramka). */
+  .field {
+    width: 100%; margin-top: .35rem; border-radius: 0;
+    border: 1.5px solid var(--color-ink); background: #fff; color: var(--color-ink);
+    padding: .6rem .75rem; font-size: 1rem;
+  }
   .field:focus-visible { outline: 3px solid var(--color-copper); outline-offset: 1px; }
+
+  /* Custom kontrolki: natywny input ukryty, stan zaznaczenia na etykiecie (.opt). */
+  .opt {
+    border-radius: 0 !important;
+    border: 1.5px solid var(--color-ink) !important;
+    background: #fff !important;
+    color: var(--color-ink);
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .opt:hover { background: #ebe2d3 !important; }
+  .opt input[type="checkbox"], .opt input[type="radio"] {
+    position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;
+  }
+  .opt:has(:checked) { background: var(--color-petrol) !important; border-color: var(--color-petrol) !important; color: var(--color-stone) !important; }
+  .opt:has(:checked) .ic { background: var(--color-stone); color: var(--color-petrol); }
+  .opt:has(:focus-visible) { outline: 3px solid var(--color-copper); outline-offset: 2px; }
+
+  /* Pasek postępu - ostre segmenty. */
+  .prog-bar { border-radius: 0 !important; }
 </style>
 
 <script>
@@ -274,13 +298,13 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
         .map((i) => `<tr class="border-b border-line/60"><td class="py-2 pr-2">${i.label}</td><td class="py-2 text-right text-muted whitespace-nowrap">${i.qty} ${i.unit}</td><td class="py-2 pl-2 text-right font-semibold whitespace-nowrap">${money(i.total)}</td></tr>`)
         .join('');
       if (r.net <= 0) {
-        result.innerHTML = `<p class="rounded-xl border border-dashed border-line bg-stone p-5 text-muted">Uzupełnij parametry w poprzednich krokach, aby zobaczyć wycenę.</p>`;
+        result.innerHTML = `<p class="border border-dashed border-line bg-stone-dark p-5 text-muted">Uzupełnij parametry w poprzednich krokach, aby zobaczyć wycenę.</p>`;
         return;
       }
       result.innerHTML = `
-        <div class="rounded-2xl border-2 border-copper/30 bg-copper/5 p-5 text-center">
-          <p class="text-sm font-semibold uppercase tracking-wide text-copper">Szacowany koszt (brutto, VAT ${r.vatRate}%)</p>
-          <p class="mt-1 font-display text-3xl font-extrabold text-ink sm:text-4xl">${money(r.low)} – ${money(r.high)}</p>
+        <div class="border-2 border-petrol bg-stone-dark p-5 text-center">
+          <p class="mono text-xs font-bold text-copper">Szacowany koszt (brutto, VAT ${r.vatRate}%)</p>
+          <p class="mt-1 font-display text-3xl font-bold text-ink sm:text-4xl">${money(r.low)} - ${money(r.high)}</p>
           <p class="mt-1 text-sm text-muted">Szacowany czas realizacji: ok. <strong>${r.days}</strong> dni roboczych</p>
         </div>
         <table class="mt-5 w-full text-sm"><tbody>${rows}</tbody>
@@ -291,10 +315,10 @@ const stepTitles = ['Rodzaj prac', 'Parametry', 'Standard', 'Wycena'];
             <tr class="text-base"><td colspan="2" class="pt-1 font-bold">Razem brutto</td><td class="pt-1 text-right font-bold text-copper">${money(r.gross)}</td></tr>
           </tfoot>
         </table>
-        <p class="mt-4 rounded-xl bg-stone p-4 text-sm text-muted"><strong>Wycena orientacyjna.</strong> Ostateczna cena po bezpłatnych oględzinach. Podane widełki uwzględniają margines ±15%.</p>
+        <p class="mt-4 border-l-2 border-copper bg-stone-dark p-4 text-sm text-muted"><strong>Wycena orientacyjna.</strong> Ostateczna cena po bezpłatnych oględzinach. Podane widełki uwzględniają margines ±15%.</p>
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button type="button" id="btn-send" class="inline-flex items-center justify-center gap-2 rounded-xl bg-copper px-5 py-3 font-bold text-white hover:bg-copper-light">Wyślij to zapytanie</button>
-          <button type="button" id="btn-copy" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-line px-5 py-3 font-bold text-ink hover:border-copper">Skopiuj podsumowanie</button>
+          <button type="button" id="btn-send" class="inline-flex items-center justify-center gap-2 bg-copper px-5 py-3 font-bold text-white hover:bg-copper-dark">Wyślij to zapytanie</button>
+          <button type="button" id="btn-copy" class="inline-flex items-center justify-center gap-2 border-[1.5px] border-ink px-5 py-3 font-bold text-ink hover:bg-stone-dark">Skopiuj podsumowanie</button>
         </div>`;
 
       const summary = formatSummary(input, r);
